@@ -10,8 +10,10 @@ Phase 1: Initial Setup
         ✔Create a table for blog posts (id, title, content, author, timestamps).
         ✔Create a table for metadata (optional: tags, categories).
         Plan for potential future tables (e.g., analytics, comments).
+        ✔Create User Model (username, password)
+        Connect to database from 'server.ts'
 
-    Implement CRUD API for Blog Posts
+    Implement CRUD API for Blog Posts backend /controllers folder
         Create: Set up API endpoint for creating new blog posts (POST request).
         Read: Set up API endpoint for fetching blog posts (GET request).
         Update: Set up API endpoint for editing existing blog posts (PUT request).
