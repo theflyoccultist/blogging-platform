@@ -11,7 +11,12 @@ Phase 1: Initial Setup
         ✔Create a table for metadata (optional: tags, categories).
         Plan for potential future tables (e.g., analytics, comments).
         ✔Create User Model (username, password)
-        Connect to database from 'server.ts'
+        ✔Connect to database from 'server.ts'
+        psql -U postgres
+        CREATE DATABASE blogging;
+        \l
+        \c blogging
+
 
     Implement CRUD API for Blog Posts backend /controllers folder
         Create: Set up API endpoint for creating new blog posts (POST request).

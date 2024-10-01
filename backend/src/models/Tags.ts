@@ -29,3 +29,5 @@ Tag.init(
             timestamps: false,
         }
 )
+
+export { Tag };
