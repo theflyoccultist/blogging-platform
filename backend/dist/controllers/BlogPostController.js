@@ -63,7 +63,7 @@ const updateBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function*
             res.status(404).json({ message: 'Blog post not found' });
             return;
         }
-        res.status(200).json(blog);
+        res.status(200).json({ message: 'Blog post updated successfully' });
     }
     catch (error) {
         res.status(500).json({ message: 'Unable to update blog post' });

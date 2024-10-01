@@ -6,6 +6,7 @@ import cors from "cors";
 
 import authRoutes from './routes/auth'
 import blogPostRoutes from './routes/blogpostroutes'
+import tagRoutes from './routes/tagroutes'
 
 const app = express();
 
@@ -33,6 +34,7 @@ sequelize.authenticate()
 
 app.use('/auth', authRoutes);
 app.use('/api', blogPostRoutes);
+app.use('/tags', tagRoutes)
 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello, Typescript + Node.js + Express!')

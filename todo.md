@@ -25,7 +25,7 @@ Phase 1: Initial Setup
         ✔Delete: Set up API endpoint for deleting blog posts (DELETE request).
         ✔Add user authentication to protect the endpoints (JWT or session-based).
 
-    Implement CRUD API for tags
+        Implement CRUD API for tags
 
     Set up the Portfolio Integration
         Add a /blog endpoint in your portfolio project that fetches posts from the blog API.

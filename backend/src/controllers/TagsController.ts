@@ -26,31 +26,34 @@ export const createTag = async (req: Request<{}, {}, TagAttribute>, res: Respons
     }
 }
 
-export const updateTag = async (req: Request<{ id: string }, {}, TagAttribute>, res: Response) => {
+export const updateTag = async (req: Request<{ id: string }, {}, TagAttribute>, res: Response): Promise<void> => {
     try {
         const tag = await Tags.update(req.body, {
             where: { id: req.params.id },
         });
-
         if (!tag) {
-            return res.status(404).json({ message: 'Tag not found' });
+            res.status(404).json({ message: 'Tag not found' });
+            return
         }
+        res.status(200).json({ message: 'Tag Edited' })
     } catch (error) {
         res.status(500).json({ message: 'Unable to update tag' });
         console.error(error);
     }
 }
 
-export const deleteTag = async (req: Request, res: Response) => {
+export const deleteTag = async (req: Request, res: Response): Promise<void> => {
     try {
         const result = await Tags.destroy({
             where: { id: req.params.id },
         });
 
         if (result === 0) {
-            return res.status(404).json({ message: 'Blog post not found' });
+            res.status(404).json({ message: 'Tag not found' });
+            return
         }
 
+        res.status(204).json({ message: "Tag deleted" })
     } catch (error) {
         res.status(500).json({ message: 'Unable to delete tag' });
         console.error(error);

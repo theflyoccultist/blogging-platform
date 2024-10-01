@@ -40,8 +40,10 @@ const updateTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: { id: req.params.id },
         });
         if (!tag) {
-            return res.status(404).json({ message: 'Tag not found' });
+            res.status(404).json({ message: 'Tag not found' });
+            return;
         }
+        res.status(200).json({ message: 'Tag Edited' });
     }
     catch (error) {
         res.status(500).json({ message: 'Unable to update tag' });
@@ -55,8 +57,10 @@ const deleteTag = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             where: { id: req.params.id },
         });
         if (result === 0) {
-            return res.status(404).json({ message: 'Blog post not found' });
+            res.status(404).json({ message: 'Tag not found' });
+            return;
         }
+        res.status(204).json({ message: "Tag deleted" });
     }
     catch (error) {
         res.status(500).json({ message: 'Unable to delete tag' });

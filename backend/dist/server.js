@@ -10,6 +10,7 @@ dotenv_1.default.config();
 const cors_1 = __importDefault(require("cors"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const blogpostroutes_1 = __importDefault(require("./routes/blogpostroutes"));
+const tagroutes_1 = __importDefault(require("./routes/tagroutes"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
@@ -31,6 +32,7 @@ database_1.sequelize.authenticate()
 });
 app.use('/auth', auth_1.default);
 app.use('/api', blogpostroutes_1.default);
+app.use('/tags', tagroutes_1.default);
 app.get('/', (req, res) => {
     res.send('Hello, Typescript + Node.js + Express!');
 });
