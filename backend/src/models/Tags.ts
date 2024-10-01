@@ -6,12 +6,12 @@ interface TagAttribute {
     name: string;
 }
 
-class Tag extends Model <TagAttribute> implements TagAttribute {
+class Tags extends Model <TagAttribute> implements TagAttribute {
     public id!: number;
     public name!: string;
 }
 
-Tag.init(
+Tags.init(
     {
         id: {
             type: DataTypes.INTEGER,
@@ -30,4 +30,4 @@ Tag.init(
         }
 )
 
-export { Tag };
+export { Tags };

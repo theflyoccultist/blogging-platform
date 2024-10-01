@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Tag = void 0;
+exports.Tags = void 0;
 const sequelize_1 = require("sequelize");
 const database_1 = require("../config/database");
-class Tag extends sequelize_1.Model {
+class Tags extends sequelize_1.Model {
 }
-exports.Tag = Tag;
-Tag.init({
+exports.Tags = Tags;
+Tags.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER,
         autoIncrement: true,

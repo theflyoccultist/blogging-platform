@@ -12,18 +12,20 @@ Phase 1: Initial Setup
         Plan for potential future tables (e.g., analytics, comments).
         ✔Create User Model (username, password)
         ✔Connect to database from 'server.ts'
-        psql -U postgres
-        CREATE DATABASE blogging;
-        \l
-        \c blogging
+            psql -U postgres
+            CREATE DATABASE blogging;
+            \l
+            \c blogging
 
 
     Implement CRUD API for Blog Posts backend /controllers folder
-        Create: Set up API endpoint for creating new blog posts (POST request).
-        Read: Set up API endpoint for fetching blog posts (GET request).
-        Update: Set up API endpoint for editing existing blog posts (PUT request).
-        Delete: Set up API endpoint for deleting blog posts (DELETE request).
-        Add user authentication to protect the endpoints (JWT or session-based).
+        ✔Create: Set up API endpoint for creating new blog posts (POST request).
+        ✔Read: Set up API endpoint for fetching blog posts (GET request).
+        ✔Update: Set up API endpoint for editing existing blog posts (PUT request).
+        ✔Delete: Set up API endpoint for deleting blog posts (DELETE request).
+        ✔Add user authentication to protect the endpoints (JWT or session-based).
+
+    Implement CRUD API for tags
 
     Set up the Portfolio Integration
         Add a /blog endpoint in your portfolio project that fetches posts from the blog API.

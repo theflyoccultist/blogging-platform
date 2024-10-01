@@ -4,6 +4,9 @@ import dotenv from "dotenv"
 dotenv.config();
 import cors from "cors";
 
+import authRoutes from './routes/auth'
+import blogPostRoutes from './routes/blogpostroutes'
+
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -27,6 +30,9 @@ sequelize.authenticate()
     .catch((err) => {
         console.error('Unable to connect to the database:', err)
     })
+
+app.use('/auth', authRoutes);
+app.use('/api', blogPostRoutes);
 
 app.get('/', (req : Request, res : Response) => {
     res.send('Hello, Typescript + Node.js + Express!')
