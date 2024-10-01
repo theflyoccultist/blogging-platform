@@ -4,11 +4,11 @@ Phase 1: Initial Setup
         ✔Create a new React project for the blog platform.
         ✔Set up the backend with Node.js and Express (or your preferred framework).
         ✔Install necessary dependencies (React, Express, Sequelize/TypeORM for PostgreSQL, etc.).
-        structure the project folder.
+        ✔structure the project folder.
 
     Design Database Schema
-        Create a table for blog posts (id, title, content, author, timestamps).
-        Create a table for metadata (optional: tags, categories).
+        ✔Create a table for blog posts (id, title, content, author, timestamps).
+        ✔Create a table for metadata (optional: tags, categories).
         Plan for potential future tables (e.g., analytics, comments).
 
     Implement CRUD API for Blog Posts
