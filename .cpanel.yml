@@ -1,0 +1,14 @@
+---
+deployment:
+  tasks:
+    - export DEPLOY_PATH=/home/fali8410/public_html/blogging-platform
+    
+    # Step 1: Build the frontend and move it to the public_html directory
+    - cd frontend
+    - npm install
+    - npm run build
+    - /bin/cp -r dist/* $DEPLOY_PATH
+    
+    # Step 2: Install backend dependencies and move the backend folder to the correct location
+    - cd ../backend
+    - /bin/cp -r * /home/fali8410/public_html/blogging-platform/backend
