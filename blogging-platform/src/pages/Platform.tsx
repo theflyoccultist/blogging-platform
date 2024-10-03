@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 interface BlogAttributes {
     id: number;
     title: string;
@@ -14,7 +16,7 @@ const BlogPosts: React.FC = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/api/blog', {
+                const response = await axios.get(`${apiUrl}/api/blog`, {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     }

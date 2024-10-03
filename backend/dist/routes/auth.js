@@ -24,6 +24,11 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     try {
         const { username, password } = req.body;
         const hashedPassword = yield bcrypt_1.default.hash(password, saltRounds);
+        const existingUser = yield Users_1.Users.findOne({ where: { username } });
+        if (existingUser) {
+            res.status(409).json({ message: 'Username already exists.' });
+            return;
+        }
         const user = yield Users_1.Users.create({ username, password: hashedPassword });
         yield user.save();
         res.status(201).json({ message: 'User created successfully' });
