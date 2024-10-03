@@ -7,14 +7,12 @@ import {
     CDBSidebarMenuItem,
     CDBSidebarFooter,
   } from 'cdbreact';
-import { NavLink } from 'react-router-dom';
-
 
 const Sidebar: React.FC = () => {
     return (
-        <div style={{ display: 'flex', height: '100vh', overflow: 'scroll initial' }}>
+        <div style={{ height: '100vh', position: 'fixed', left: 0, top: 0, width: '250px', zIndex: 5, }}>
           <CDBSidebar textColor="#333" backgroundColor="#f0f0f0" className={""} breakpoint={0} toggled={false} minWidth={""} maxWidth={""}>
-            <CDBSidebarHeader prefix={<i className="fa fa-bars"></i>}>
+            <CDBSidebarHeader>
               <a href="/" className="text-decoration-none" style={{ color: 'inherit' }}>
                 Sidebar
               </a>
@@ -35,7 +33,7 @@ const Sidebar: React.FC = () => {
                   textAlign: "center"
                 }}
               >
-                Sidebar Footer
+                <a href="#logout">Logout</a>
               </div>
             </CDBSidebarFooter>
           </CDBSidebar>

@@ -1,38 +1,37 @@
-import React, { useEffect, useState } from "react";
-import axios from 'axios';
+import React from "react";
+import { Container, Row, Col } from 'react-bootstrap'
 
 import Sidebar from '../components/Sidebar'
+import NavigationBar from "../components/Navigationbar";
+import Table from "../components/Table";
+import Footer from "../components/Footer";
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
-interface BlogAttributes {
-    id: number;
-    title: string;
-    content: Text;
-    author: string;
-}
 
 const BlogPosts: React.FC = () => {
-    // const [blog, setBlog] = useState<BlogAttributes[]>([]);
-
-    // useEffect(() => {
-    //     const fetchPosts = async () => {
-    //         try {
-    //             const response = await axios.get(`${apiUrl}/api/blog`, {
-    //                 headers: {
-    //                     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-    //                 }
-    //             });
-    //             setBlog(response.data);
-    //         } catch (error) {
-    //             console.error('Error fetching blogposts', error);
-    //         }
-    //     };
-    //     fetchPosts();
-    // }, []);
 
     return (
-            <Sidebar />
+        <div style={{ minHeight: "100vh", position: "relative" }}>
+            <Container fluid>
+    
+                <Row className="mt-2">
+                    <Col xs={12} md={3}>
+                        <Sidebar />
+                    </Col>
+                    
+                    <Col>
+                        <NavigationBar />
+                    </Col>
+
+                    <Col xs={12} md={9} style={{ marginLeft: '250px' }}>
+                        <Table />
+                    </Col>
+                </Row>
+            </Container>
+
+            <footer>
+                <Footer />
+            </footer>
+        </div>
     );
 };
 
