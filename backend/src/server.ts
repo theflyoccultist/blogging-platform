@@ -2,20 +2,19 @@ import express, {Request, Response} from 'express';
 import { sequelize } from "./config/database";
 import dotenv from "dotenv"
 dotenv.config();
-import cors from "cors";
 
 import authRoutes from './routes/auth'
 import blogPostRoutes from './routes/blogpostroutes'
 import tagRoutes from './routes/tagroutes'
+import cors from "cors";
 
 const app = express();
-
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
 app.use(cors({
-    origin: 'https://rinkakuworks.com/blogging-platform',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));

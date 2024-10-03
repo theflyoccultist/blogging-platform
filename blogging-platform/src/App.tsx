@@ -7,7 +7,8 @@ function App() {
   return (
     <>
       <h2>Blogging Platform - Portal</h2>
-      <Button variant="primary" href="/login">Login</Button>
+      <p><Button variant="primary" href="/login">Login</Button></p>
+      <p><Button variant="primary" href="/register">Register</Button></p>
     </>
   )
 }

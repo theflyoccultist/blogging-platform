@@ -14,7 +14,7 @@ const BlogPosts: React.FC = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const response = await axios.get('https://fali8410.odns.fr/blogging-platform/backend/api/blog', {
+                const response = await axios.get('http://localhost:3000/api/blog', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
                     }

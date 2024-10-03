@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -11,17 +11,17 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:3000/auth/login', { username, password });
+            const response = await axios.post('http://localhost:3000/auth/register', { username, password });
             localStorage.setItem('token', response.data.token);
             navigate('/platform');
         } catch (error) {
-            setError('Invalid username or password');
+            setError('An error occured - could not register account');
         }
     }
 
     return(
         <div>
-            <h2>Login</h2>
+            <h2>Register</h2>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>
@@ -42,10 +42,10 @@ const Login: React.FC = () => {
                         required
                     />
                 </div>
-                <button type='submit'>Login</button>
+                <button type='submit'>Register</button>
             </form>
         </div>
     )
 }
 
-export default Login;
+export default Register;

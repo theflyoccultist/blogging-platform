@@ -7,15 +7,15 @@ const express_1 = __importDefault(require("express"));
 const database_1 = require("./config/database");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-const cors_1 = __importDefault(require("cors"));
 const auth_1 = __importDefault(require("./routes/auth"));
 const blogpostroutes_1 = __importDefault(require("./routes/blogpostroutes"));
 const tagroutes_1 = __importDefault(require("./routes/tagroutes"));
+const cors_1 = __importDefault(require("cors"));
 const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: 'https://rinkakuworks.com/blogging-platform',
+    origin: 'http://localhost:5173',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
