@@ -12,7 +12,7 @@ const NavigationBar: React.FC = () => {
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>
-            <a href="#new">Create Post</a>
+            <a href="/createpost">Create Post</a>
           </Navbar.Text>
         </Navbar.Collapse>
       </Container>

@@ -1,0 +1,19 @@
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;;
+    justify-content: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+input, button {
+    padding: 8px;
+    width: 100%;
+    max-width: 300px;
+}

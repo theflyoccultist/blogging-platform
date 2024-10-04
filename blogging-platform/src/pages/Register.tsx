@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/Auth.css'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -35,7 +36,7 @@ const Register: React.FC = () => {
     };
 
     return(
-        <div>
+        <div className='centered'>
             <h2>Register</h2>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>

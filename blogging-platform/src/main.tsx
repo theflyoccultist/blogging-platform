@@ -7,6 +7,7 @@ import './styles/index.css'
 import Login from './pages/Login.tsx';
 import Register from './pages/Register.tsx';
 import BlogPosts from './pages/Platform';
+import CreatePost from "./pages/CreatePost";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Route path='/login' element={<Login />} />
       <Route path='/register' element={<Register />} />
       <Route path='/platform' element={<BlogPosts />} />
+      <Route path='/createpost' element={<CreatePost />} />
     </Routes>
     </BrowserRouter>
   </React.StrictMode>,

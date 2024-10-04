@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/Auth.css'
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
     }
 
     return(
-        <div>
+        <div className='centered'>
             <h2>Login</h2>
             {error && <p>{error}</p>}
             <form onSubmit={handleSubmit}>
