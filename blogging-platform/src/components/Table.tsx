@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
+import '../styles/Platform.css'
 import axios from 'axios';
 
 interface BlogPost {
@@ -14,6 +16,7 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const Table: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
       const fetcBlogPosts = async () => {
@@ -31,10 +34,15 @@ const Table: React.FC = () => {
       fetcBlogPosts();
     }, []);
 
+    const handleRowClick = (id: number) => {
+      navigate(`/editpost/${id}`); // Redirect to the edit page
+    }
+
     return (
       <div>
-        {/* list of blog posts */}
+        {/* Table with blog posts */}
       <div style={{ marginTop: '80px' }}>
+        <h3>Click on a post to add modifications</h3>
       <CDBContainer>
         <CDBTable hover>
           <CDBTableHeader>
@@ -49,7 +57,7 @@ const Table: React.FC = () => {
           <CDBTableBody>
             {blogPosts.map((blog, key) => {
               return (
-              <tr key={key}>
+              <tr key={key} onClick={() => handleRowClick(blog.id)} style={{ cursor: 'pointer' }}>
                 <td>{blog.id}</td>
                 <td>{blog.title}</td>
                 <td>{blog.content}</td>
@@ -63,9 +71,6 @@ const Table: React.FC = () => {
       </CDBContainer>      
       </div>
       </div>
-      
-      
-
   );
 };
 export default Table;

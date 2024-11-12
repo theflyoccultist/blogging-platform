@@ -35,8 +35,9 @@ Phase 2: Admin Features
 
     Create Admin Interface for Blog Platform
         Add a hidden admin route (e.g., /admin/blog) that’s protected by authentication.
-        Implement a simple interface for creating, editing, and deleting blog posts.
-        Make the admin interface accessible only to authenticated users.
+        Implement a simple interface for creating, 
+        editing, and deleting blog posts.
+        ✔Make the admin interface accessible only to authenticated users.
 
     Frontend Enhancements
         Add pagination or lazy loading for the blog post list.
@@ -66,7 +67,7 @@ Phase 4: Analytics & Future Features
 Phase 5: Testing & Deployment
 
     Testing
-        Write unit and integration tests for the API endpoints.
+        ✔Write unit and integration tests for the API endpoints.
         Perform user testing on the admin interface.
     Deploy
         Deploy the blog platform separately from the portfolio.

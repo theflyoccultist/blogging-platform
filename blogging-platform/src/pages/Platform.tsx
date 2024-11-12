@@ -11,7 +11,6 @@ const BlogPosts: React.FC = () => {
     return (
         <div style={{ minHeight: "100vh", position: "relative" }}>
             <Container fluid>
-    
                 <Row className="mt-2">
                     <Col xs={12} md={3}>
                         <Sidebar />
