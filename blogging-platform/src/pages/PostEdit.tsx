@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
-import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
+import axios from 'axios';
 import '../styles/Platform.css'
 
 interface EditBlogPost {
