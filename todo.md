@@ -35,8 +35,7 @@ Phase 2: Admin Features
 
     Create Admin Interface for Blog Platform
         Add a hidden admin route (e.g., /admin/blog) that’s protected by authentication.
-        Implement a simple interface for creating, 
-        editing, and deleting blog posts.
+        ✔Implement a simple interface for creating, editing, and deleting blog posts.
         ✔Make the admin interface accessible only to authenticated users.
 
     Frontend Enhancements

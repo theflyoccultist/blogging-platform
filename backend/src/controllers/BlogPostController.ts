@@ -20,7 +20,7 @@ export const getAllBlogPosts = async (req: Request, res: Response) => {
 
 export const getBlogPost = async (req: Request, res: Response): Promise<void> => {
     try {
-        const blog = await BlogPost.findOne(req.body);
+        const blog = await BlogPost.findOne({ where: { id: req.params.id }});
         if (!blog) {
             res.status(404).json({ message: 'Blog post not found' });
             return

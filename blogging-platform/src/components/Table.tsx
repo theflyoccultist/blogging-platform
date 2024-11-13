@@ -60,7 +60,7 @@ const Table: React.FC = () => {
               <tr key={key} onClick={() => handleRowClick(blog.id)} style={{ cursor: 'pointer' }}>
                 <td>{blog.id}</td>
                 <td>{blog.title}</td>
-                <td>{blog.content}</td>
+                <td>{blog.content.replace(/<p>|<\/p>/g, '')}</td>
                 <td>{blog.author}</td>
                 <td>{blog.publishedAt}</td>
               </tr>                

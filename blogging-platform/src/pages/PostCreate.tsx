@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
@@ -8,6 +9,7 @@ import { Button } from "react-bootstrap";
 const apiUrl = import.meta.env.VITE_API_URL;
 
 const CreatePost : React.FC = () => {
+    const navigate = useNavigate();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
@@ -26,6 +28,7 @@ const CreatePost : React.FC = () => {
             setTitle('');
             setContent('');
             setAuthor('');
+            navigate("/platform");
             console.log("Post created successfully:", response.data);
         } catch (error) {
             console.error('Error editing post', error);
@@ -73,7 +76,7 @@ const CreatePost : React.FC = () => {
                     width: '100%',
                     padding: '10px',
                     fontSize: '18px',
-                    marginTop: '5px',
+                    marginTop: '50px',
                 }}
                 />
             </div>

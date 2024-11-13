@@ -24,7 +24,7 @@ const getAllBlogPosts = (req, res) => __awaiter(void 0, void 0, void 0, function
 exports.getAllBlogPosts = getAllBlogPosts;
 const getBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blog = yield BlogPost_1.BlogPost.findOne(req.body);
+        const blog = yield BlogPost_1.BlogPost.findOne({ where: { id: req.params.id } });
         if (!blog) {
             res.status(404).json({ message: 'Blog post not found' });
             return;

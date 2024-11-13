@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -17,6 +17,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const EditPost : React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
+
   const [editBlogPost, setEditBlogPost] = useState<EditBlogPost | null>(null);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -24,38 +27,39 @@ const EditPost : React.FC = () => {
 
   useEffect(() => {
     const fetchPostData = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(`${apiUrl}/api/blog/${id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        setEditBlogPost(response.data);
         setTitle(response.data.title);
         setContent(response.data.content);
         setAuthor(response.data.author);
       } catch (error) {
         console.error('Error fetching blog post', error);  
+      } finally {
+        setLoading(false);
       }
     };
     if (id) fetchPostData();
+
   }, [id]);
+
+  if (loading) return <div>Loading...</div>;
 
   const handleSave = async () => {
     try {
       const response = await axios.put(`${apiUrl}/api/blog/${id}`, 
-        { 
-          title, 
-          content, 
-          author, 
-        },
+        { title, content, author },
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           }          
-        }
-      );
+        });
       setEditBlogPost(response.data);
+      navigate("/platform");
     } catch (error) {
       console.error('Error editing post', error);
     }
@@ -68,6 +72,20 @@ const EditPost : React.FC = () => {
       setAuthor(editBlogPost.author);
     }
   };
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`${apiUrl}/api/blog/${id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          }          
+        });
+        navigate("/platform");
+    } catch (error) {
+      console.error('Error deleting post', error);
+    }
+  }
 
   return (
     <div style={{ maxWidth: '800px', margin: '50px auto' }}>
@@ -106,16 +124,27 @@ const EditPost : React.FC = () => {
             width: '100%',
             padding: '10px',
             fontSize: '18px',
-            marginTop: '5px',
+            marginTop: '50px',
           }}
         />
       </div>
       
       <Button onClick={handleSave} style={{ margin: '50px 20px', padding: '10px 20px'}}>
-        Save Changes
+          Save Changes
       </Button>
       <Button onClick={handleReset} variant='secondary' style={{ margin: '50px 20px', padding: '10px 20px'}}>
-        Reset
+          Revert Changes
+      </Button>
+      <Button 
+        variant='danger'
+        style={{ margin: '50px 20px', padding: '10px 20px'}}
+        onClick={() => {
+          if (window.confirm(`Are you sure you want to delete the current post?`)) {
+            handleDelete();            
+          }
+        }}
+      > 
+        Delete Post
       </Button>
     </div>
   );
