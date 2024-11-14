@@ -20,7 +20,7 @@ const BlogPosts: React.FC = () => {
                         <NavigationBar />
                     </Col>
 
-                    <Col xs={12} md={9} style={{ marginLeft: '250px' }}>
+                    <Col xs={12} md={9} style={{ marginLeft: '250px', marginBottom: '80px' }}>
                         <Table />
                     </Col>
                 </Row>

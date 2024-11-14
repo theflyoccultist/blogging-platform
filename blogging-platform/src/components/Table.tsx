@@ -49,20 +49,25 @@ const Table: React.FC = () => {
             <tr>
               <th>ID</th>
               <th>Post Title</th>
-              <th>Content</th>
+              <th>Status</th>
               <th>Author</th>
-              <th>Published at</th>
+              <th>Date_Issued</th>
+              <th>Tags</th>
             </tr>
           </CDBTableHeader>
           <CDBTableBody>
             {blogPosts.map((blog, key) => {
+                const isoDateString = blog.publishedAt;
+                const dateObject = new Date(isoDateString);
+                const formattedDate = dateObject.toDateString();
               return (
               <tr key={key} onClick={() => handleRowClick(blog.id)} style={{ cursor: 'pointer' }}>
                 <td>{blog.id}</td>
                 <td>{blog.title}</td>
-                <td>{blog.content.replace(/<p>|<\/p>/g, '')}</td>
+                <td>status</td>
                 <td>{blog.author}</td>
-                <td>{blog.publishedAt}</td>
+                <td>{formattedDate}</td>
+                <td>Tags</td>
               </tr>                
               )
             })}
