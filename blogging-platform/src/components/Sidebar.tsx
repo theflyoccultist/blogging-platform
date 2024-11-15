@@ -20,9 +20,9 @@ const Sidebar: React.FC = () => {
     
             <CDBSidebarContent className="sidebar-content">
                 <CDBSidebarMenu>
-                    <CDBSidebarMenuItem icon="th-large">Dashboard</CDBSidebarMenuItem>
-                    <CDBSidebarMenuItem icon="sticky-note">Components</CDBSidebarMenuItem>
-                    <CDBSidebarMenuItem icon="chart-line" iconType="solid">Metrics</CDBSidebarMenuItem>
+                    <CDBSidebarMenuItem>Dashboard</CDBSidebarMenuItem>
+                    <CDBSidebarMenuItem>Components</CDBSidebarMenuItem>
+                    <CDBSidebarMenuItem>Metrics</CDBSidebarMenuItem>
                 </CDBSidebarMenu>
             </CDBSidebarContent>
     
