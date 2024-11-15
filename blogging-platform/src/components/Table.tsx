@@ -56,7 +56,8 @@ const Table: React.FC = () => {
             </tr>
           </CDBTableHeader>
           <CDBTableBody>
-            {blogPosts.map((blog, key) => {
+            {Array.isArray(blogPosts) && blogPosts.length > 0 ? (
+              blogPosts.map((blog, key) => {
                 const isoDateString = blog.publishedAt;
                 const dateObject = new Date(isoDateString);
                 const formattedDate = dateObject.toDateString();
@@ -69,8 +70,15 @@ const Table: React.FC = () => {
                 <td>{formattedDate}</td>
                 <td>Tags</td>
               </tr>                
-              )
-            })}
+              );
+            })
+            ) : (
+              <tr>
+                <td colSpan={6} style={{ textAlign: 'center' }}>
+                  No blog posts found.
+                </td>
+              </tr>
+            )}
           </CDBTableBody>
         </CDBTable>
       </CDBContainer>      
