@@ -15,7 +15,7 @@ const app = (0, express_1.default)();
 const port = process.env.PORT || 3000;
 app.use(express_1.default.json());
 app.use((0, cors_1.default)({
-    origin: ['http://localhost:5173', 'https://rinkakuworks.com/blogging-platform'],
+    origin: ['http://localhost:5173', 'https://www.blogging-platform.rinkakuworks.com/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
