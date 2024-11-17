@@ -1,16 +1,20 @@
-# .htaccess file for handling SPA routing with React Router
+# .htaccess file for handling SPA routing with React Router and API proxy
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # Force HTTPS
+  RewriteCond %{HTTPS} !=on
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # Serve static files directly if they exist
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
 
   # Route API requests to the backend
-  RewriteCond %{REQUEST_URI} ^/api/ [NC,OR]
-  RewriteCond %{REQUEST_URI} ^/auth/ [NC,OR]
-  RewriteCond %{REQUEST_URI} ^/tags/ [NC]
+  RewriteCond %{REQUEST_URI} ^/backend/api/ [NC,OR]
+  RewriteCond %{REQUEST_URI} ^/backend/auth/ [NC,OR]
+  RewriteCond %{REQUEST_URI} ^/backend/tags/ [NC]
   RewriteRule ^(.*)$ http://127.0.0.1:3000/$1 [P,L]
 
   # Redirect all other requests to index.html
@@ -22,4 +26,5 @@
 <IfModule mod_mime.c>
   AddType application/javascript .js
   AddType text/css .css
+  AddType text/html .html
 </IfModule>
