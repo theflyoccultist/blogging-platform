@@ -25,6 +25,7 @@ export const getBlogPost = async (req: Request, res: Response): Promise<void> =>
             res.status(404).json({ message: 'Blog post not found' });
             return
         }
+        console.log('Posts retrieved', blog)
         res.status(200).json(blog);
     } catch (error) {
         res.status(500).json({ message: 'Unable to retrieve blog post' });
@@ -42,7 +43,7 @@ export const createBlogPost = async (req: Request<{}, {}, BlogPostAttributes>, r
             author,
             publishedAt,
         });
-
+        console.log('New post created', blog)
         res.status(201).json(blog);
     } catch (error) {
         res.status(500).json({ message: 'Unable to create blog post' });

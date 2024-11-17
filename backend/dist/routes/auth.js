@@ -25,6 +25,7 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
         const { username, password } = req.body;
         const hashedPassword = yield bcrypt_1.default.hash(password, saltRounds);
         const existingUser = yield Users_1.Users.findOne({ where: { username } });
+        console.log('User found', existingUser);
         if (existingUser) {
             res.status(409).json({ message: 'Username already exists.' });
             return;
@@ -46,6 +47,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
             return;
         }
         const passwordMatch = yield bcrypt_1.default.compare(password, user.password);
+        console.log('Password match', passwordMatch);
         if (!passwordMatch) {
             res.status(401).json({ error: 'Invalid password' });
             return;
@@ -53,6 +55,7 @@ router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* 
         const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, {
             expiresIn: '1d',
         });
+        console.log('Generated token:', token);
         res.status(200).json({ token });
     }
     catch (error) {

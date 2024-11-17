@@ -21,7 +21,8 @@ router.post('/register', async (req: Request, res: Response) => {
         const hashedPassword = await bcrypt.hash(password, saltRounds);
         
         const existingUser = await Users.findOne({ where: { username } });
-    
+        console.log('User found', existingUser);
+
         if (existingUser) {
             res.status(409).json({ message: 'Username already exists.' });
             return
@@ -47,6 +48,7 @@ router.post('/login', async (req: Request, res: Response) => {
             }
 
         const passwordMatch = await bcrypt.compare(password, user.password);
+            console.log('Password match', passwordMatch);
             if (!passwordMatch) {
                 res.status(401).json({ error: 'Invalid password' });
                 return
@@ -56,6 +58,7 @@ router.post('/login', async (req: Request, res: Response) => {
             expiresIn: '1d',
         });
         
+        console.log('Generated token:', token)
         res.status(200).json({ token });
     } catch (error) {
         res.status(500).json({ error: 'Login failed' });

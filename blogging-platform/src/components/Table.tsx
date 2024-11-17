@@ -26,6 +26,7 @@ const Table: React.FC = () => {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
               }
             });
+            console.log('blog posts fetched', response.data);
             setBlogPosts(response.data);
         } catch (error) {
             console.error('Error fetching blog posts', error);

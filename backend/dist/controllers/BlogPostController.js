@@ -29,6 +29,7 @@ const getBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             res.status(404).json({ message: 'Blog post not found' });
             return;
         }
+        console.log('Posts retrieved', blog);
         res.status(200).json(blog);
     }
     catch (error) {
@@ -46,6 +47,7 @@ const createBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function*
             author,
             publishedAt,
         });
+        console.log('New post created', blog);
         res.status(201).json(blog);
     }
     catch (error) {
