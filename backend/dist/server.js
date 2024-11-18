@@ -30,9 +30,9 @@ database_1.sequelize.authenticate()
     .catch((err) => {
     console.error('Unable to connect to the database:', err);
 });
-app.use('/auth', auth_1.default);
-app.use('/api', blogpostroutes_1.default);
-app.use('/tags', tagroutes_1.default);
+app.use('/backend/auth', auth_1.default);
+app.use('/backend/api', blogpostroutes_1.default);
+app.use('/backend/tags', tagroutes_1.default);
 app.get('/backend', (req, res) => {
     res.send('Hello from backend route!');
 });
