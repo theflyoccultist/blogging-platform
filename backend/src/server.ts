@@ -35,8 +35,8 @@ app.use('/auth', authRoutes);
 app.use('/api', blogPostRoutes);
 app.use('/tags', tagRoutes)
 
-app.get('/', (req : Request, res : Response) => {
-    res.send('Hello, Typescript + Node.js + Express!')
+app.get('/backend', (req : Request, res : Response) => {
+    res.send('Hello from backend route!')
 })
 
 app.listen(port, () => {

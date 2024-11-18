@@ -33,8 +33,8 @@ database_1.sequelize.authenticate()
 app.use('/auth', auth_1.default);
 app.use('/api', blogpostroutes_1.default);
 app.use('/tags', tagroutes_1.default);
-app.get('/', (req, res) => {
-    res.send('Hello, Typescript + Node.js + Express!');
+app.get('/backend', (req, res) => {
+    res.send('Hello from backend route!');
 });
 app.listen(port, () => {
     console.log(`server is running on http://localhost:${port}`);
