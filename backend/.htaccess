@@ -1,0 +1,23 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/fali8410/public_html/blogging-platform/backend"
+PassengerBaseURI "/backend"
+PassengerNodejs "/home/fali8410/nodevenv/public_html/blogging-platform/backend/22/bin/node"
+PassengerAppType node
+PassengerStartupFile server.js
+PassengerAppLogFile "/home/fali8410/logs/blogging-platform-backend.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+# Force HTTPS redirection
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /backend
+
+    # Redirect HTTP to HTTPS
+    RewriteCond %{HTTPS} !=on
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Redirect all other requests to Node.js backend
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ http://127.0.0.1:3000%{REQUEST_URI} [P,L]
+</IfModule>

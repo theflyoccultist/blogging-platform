@@ -11,12 +11,6 @@
   RewriteCond %{REQUEST_FILENAME} -f
   RewriteRule ^ - [L]
 
-  # Route API requests to the backend
-  RewriteCond %{REQUEST_URI} ^/backend/api/ [NC,OR]
-  RewriteCond %{REQUEST_URI} ^/backend/auth/ [NC,OR]
-  RewriteCond %{REQUEST_URI} ^/backend/tags/ [NC]
-  RewriteRule ^backend/(.*)$ http://127.0.0.1:3000/$1 [P,L]
-
   # Redirect all other requests to React's index.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -29,9 +23,3 @@
   AddType text/css .css
   AddType text/html .html
 </IfModule>
-
-# Preserve Host for Proxy
-<IfModule mod_proxy.c>
-  ProxyPreserveHost On
-</IfModule>
-
