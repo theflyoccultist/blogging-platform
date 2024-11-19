@@ -12,7 +12,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://www.blogging-platform.rinkakuworks.com/'],
+    origin: ['https://www.rinkakuworks.com/', 'https://www.blogging-platform.rinkakuworks.com/'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     credentials: true
 }));
