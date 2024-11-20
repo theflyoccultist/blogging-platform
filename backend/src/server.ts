@@ -12,11 +12,22 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors({
-    origin: ['https://www.rinkakuworks.com/', 'https://www.blogging-platform.rinkakuworks.com/'],
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    credentials: true
-}));
+app.use((req, res, next) => {
+    if (req.method === 'GET' && req.headers.origin === 'https://www.rinkakuworks.com') {
+        cors({
+            origin: 'https://www.rinkakuworks.com',
+            methods: ['GET'],
+            credentials: false
+        })(req, res, next);
+    } else {
+        cors({
+            origin: 'https://www.blogging-platform.rinkakuworks.com',
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            credentials: true
+        })(req, res, next);
+    }
+});
+
 
 app.use(express.json());
 
