@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const database_1 = require("./config/database");
+const rateLimit_1 = require("./middleware/rateLimit");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const auth_1 = __importDefault(require("./routes/auth"));
@@ -31,8 +32,8 @@ database_1.sequelize.authenticate()
     console.error('Unable to connect to the database:', err);
 });
 app.use('/backend/auth', auth_1.default);
-app.use('/backend/api', blogpostroutes_1.default);
-app.use('/backend/tags', tagroutes_1.default);
+app.use('/backend/api', rateLimit_1.limiter, blogpostroutes_1.default);
+app.use('/backend/tags', rateLimit_1.limiter, tagroutes_1.default);
 app.get('/backend', (req, res) => {
     res.send('Hello from backend route!');
 });
