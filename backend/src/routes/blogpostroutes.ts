@@ -6,8 +6,8 @@ const router = express.Router();
 
 
 // Apply verifyToken middleware to protect routes
-router.get('/blog', verifyToken, getAllBlogPosts);
-router.get('/blog/:id', verifyToken, getBlogPost);
+router.get('/blog', getAllBlogPosts);
+router.get('/blog/:id', getBlogPost);
 router.post('/blog', verifyToken, createBlogPost);
 router.put('/blog/:id', verifyToken, updateBlogPost);
 router.delete('/blog/:id', verifyToken, deleteBlogPost);

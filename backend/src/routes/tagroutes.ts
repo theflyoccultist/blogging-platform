@@ -4,7 +4,7 @@ import { verifyToken } from "../middleware/authMiddleware";
 
 const router = express.Router();
 
-router.get('/', verifyToken, getAllTags);
+router.get('/', getAllTags);
 router.post('/', verifyToken, createTag);
 router.put('/:id', verifyToken, updateTag);
 router.delete('/:id', verifyToken, deleteTag)

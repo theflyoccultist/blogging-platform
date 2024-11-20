@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import { sequelize } from "./config/database";
+import { limiter } from "./middleware/rateLimit";
 import dotenv from "dotenv"
 dotenv.config();
 
@@ -32,8 +33,8 @@ sequelize.authenticate()
     })
 
 app.use('/backend/auth', authRoutes);
-app.use('/backend/api', blogPostRoutes);
-app.use('/backend/tags', tagRoutes)
+app.use('/backend/api', limiter, blogPostRoutes);
+app.use('/backend/tags', limiter, tagRoutes)
 
 app.get('/backend', (req : Request, res : Response) => {
     res.send('Hello from backend route!')
