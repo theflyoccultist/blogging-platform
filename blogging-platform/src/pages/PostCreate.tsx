@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useRef, useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill';
+import { quillModules, addCustomButtonLabel } from "../components/quillToolbarConfig";
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import '../styles/Platform.css'
@@ -10,24 +11,44 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const CreatePost : React.FC = () => {
     const navigate = useNavigate();
+    const quillRef = useRef<ReactQuill>(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
     const [error, setError] = useState<string | null>(null)
 
+    useEffect(() => {
+        addCustomButtonLabel();
+    }, []);
+
+    const resetForm = () => {
+        setTitle('');
+        setContent('');
+        setAuthor('');
+        setError(null);
+    };
+
+    const memorizedModules = useMemo(
+        () => quillModules(quillRef),
+        [quillRef]
+    );
+
     const handlePostCreation = async () => {
+        if (!title || !content || !author) {
+            setError('All fields are required.');
+            return;
+        }
+
         try {
             const response = await axios.post(`${apiUrl}/api/blog`,
                 { title, content, author },
                 {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                    }
+                    },
                 }
             );
-            setTitle('');
-            setContent('');
-            setAuthor('');
+            resetForm();
             navigate("/platform");
             console.log("Post created successfully:", response.data);
         } catch (error) {
@@ -59,10 +80,12 @@ const CreatePost : React.FC = () => {
 
             <div style={{ marginBottom: '20px' }}>
                 <label>Content:</label>
-                <ReactQuill 
+                <ReactQuill
+                    ref={quillRef}
                     value={content}
                     onChange={setContent}
                     style={{ height: '300px' }}
+                    modules={memorizedModules}
                 />
             </div>
 
@@ -84,7 +107,6 @@ const CreatePost : React.FC = () => {
             <Button onClick={handlePostCreation} style={{ margin: '50px 20px', padding: '10px 20px'}}>
                 Create Post
             </Button>
-        
         </div>
     );
 };
