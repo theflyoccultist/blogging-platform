@@ -1,12 +1,14 @@
 import express, {Request, Response} from 'express';
 import { sequelize } from "./config/database";
+import cookieParser from 'cookie-parser';
 import { limiter } from "./middleware/rateLimit";
-import dotenv from "dotenv"
+import { preventCache } from "./middleware/preventCache"
+import dotenv from "dotenv";
 dotenv.config();
 
-import authRoutes from './routes/auth'
-import blogPostRoutes from './routes/blogpostroutes'
-import tagRoutes from './routes/tagroutes'
+import authRoutes from './routes/auth/index';
+import blogPostRoutes from './routes/blogpostroutes';
+import tagRoutes from './routes/tagroutes';
 import cors from "cors";
 
 const app = express();
@@ -21,13 +23,14 @@ app.use((req, res, next) => {
         })(req, res, next);
     } else {
         cors({
-            origin: 'https://www.blogging-platform.rinkakuworks.com',
+            origin: 'https://www.blogging-platform.rinkakuworks.com/',
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
             credentials: true
         })(req, res, next);
     }
 });
 
+app.use(cookieParser());
 
 app.use(express.json());
 
@@ -44,8 +47,8 @@ sequelize.authenticate()
     })
 
 app.use('/backend/auth', authRoutes);
-app.use('/backend/api', limiter, blogPostRoutes);
-app.use('/backend/tags', limiter, tagRoutes)
+app.use('/backend/api', limiter, preventCache, blogPostRoutes);
+app.use('/backend/tags', limiter, preventCache, tagRoutes);
 
 app.get('/backend', (req : Request, res : Response) => {
     res.send('Hello from backend route!')

@@ -28,25 +28,25 @@ Phase 1: Initial Setup
         Implement CRUD API for tags
 
     Set up the Portfolio Integration
-        Add a /blog endpoint in your portfolio project that fetches posts from the blog API.
+        ✔Add a /blog endpoint in your portfolio project that fetches posts from the blog API.
         Implement frontend components to display blog posts (list view, post detail view).
 
 Phase 2: Admin Features
 
     Create Admin Interface for Blog Platform
-        Add a hidden admin route (e.g., /admin/blog) that’s protected by authentication.
+        ✔Add a hidden admin route (e.g., /admin/blog) that’s protected by authentication.
         ✔Implement a simple interface for creating, editing, and deleting blog posts.
         ✔Make the admin interface accessible only to authenticated users.
 
     Frontend Enhancements
         Add pagination or lazy loading for the blog post list.
         Add a search or filtering feature for blog posts on the public side.
-        Implement a rich text editor for writing blog posts (e.g., using react-quill).
+        ✔Implement a rich text editor for writing blog posts (e.g., using react-quill).
 
 Phase 3: Performance & SEO
 
     Code Splitting & Lazy Loading
-        Implement code splitting and lazy loading for the blog management components.
+        ✔Implement code splitting and lazy loading for the blog management components.
         Optimize images and static resources for faster loading times.
     SEO & Social Media Integration
         Add metadata (title, description) and Open Graph tags for each blog post.
@@ -67,7 +67,9 @@ Phase 5: Testing & Deployment
 
     Testing
         ✔Write unit and integration tests for the API endpoints.
-        Perform user testing on the admin interface.
+        ✔Perform user testing on the admin interface.
     Deploy
-        Deploy the blog platform separately from the portfolio.
-        Ensure that the /blog endpoint on your portfolio correctly fetches posts from the live API.
+        ✔Deploy the blog platform separately from the portfolio.
+        ✔Ensure that the /blog endpoint on your portfolio correctly fetches posts from the live API.
+
+Fix a bug where the code button is clickable in PostEdit, but isn't visible.

@@ -13,9 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const Users_1 = require("../models/Users");
+const Users_1 = require("../../models/Users");
 const bcrypt_1 = __importDefault(require("bcrypt"));
-const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const router = express_1.default.Router();
@@ -25,7 +24,6 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
         const { username, password } = req.body;
         const hashedPassword = yield bcrypt_1.default.hash(password, saltRounds);
         const existingUser = yield Users_1.Users.findOne({ where: { username } });
-        console.log('User found', existingUser);
         if (existingUser) {
             res.status(409).json({ message: 'Username already exists.' });
             return;
@@ -36,31 +34,6 @@ router.post('/register', (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
     catch (error) {
         res.status(500).json({ error: 'Registration failed ' });
-    }
-}));
-router.post('/login', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { username, password } = req.body;
-        const user = yield Users_1.Users.findOne({ where: { username } });
-        if (user === null) {
-            res.status(401).json({ error: 'User not found' });
-            return;
-        }
-        const passwordMatch = yield bcrypt_1.default.compare(password, user.password);
-        console.log('Password match', passwordMatch);
-        if (!passwordMatch) {
-            res.status(401).json({ error: 'Invalid password' });
-            return;
-        }
-        const token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, {
-            expiresIn: '1d',
-        });
-        console.log('Generated token:', token);
-        res.status(200).json({ token });
-    }
-    catch (error) {
-        res.status(500).json({ error: 'Login failed' });
-        return;
     }
 }));
 exports.default = router;

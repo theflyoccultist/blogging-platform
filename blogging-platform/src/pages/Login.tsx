@@ -14,12 +14,18 @@ const Login: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${apiUrl}/auth/login`, { username, password });
+            const response = await axios.post(`${apiUrl}/auth/login`, 
+                { username, password },
+                { withCredentials: true }
+            );
             localStorage.setItem('token', response.data.token);
             navigate('/platform');
         } catch (error) {
-            setError('Invalid username or password');
-        }
+                if (axios.isAxiosError(error)) {
+                    console.error('Error response:', error.response);
+                }
+                setError('Invalid username or password');
+            }
     }
 
     return(
