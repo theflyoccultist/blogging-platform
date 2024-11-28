@@ -23,7 +23,7 @@ app.use((req, res, next) => {
         })(req, res, next);
     } else {
         cors({
-            origin: 'https://www.blogging-platform.rinkakuworks.com/',
+            origin: 'https://www.blogging-platform.rinkakuworks.com',
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
             credentials: true
         })(req, res, next);
