@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import ReactQuill from 'react-quill';
 import { quillModules, addCustomButtonLabel } from "../components/quillToolbarConfig";
+import { refreshAuthToken } from '../middlewares/tokenRefresher';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
-import '../styles/Platform.css'
+import '../styles/Platform.css';
 
 interface EditBlogPost {
   id: number;
@@ -26,10 +27,6 @@ const EditPost : React.FC = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
-
-  useEffect(() => {
-    addCustomButtonLabel();
-  }, []);
 
   const memorizedModules = useMemo(
     () => quillModules(quillRef),
@@ -57,17 +54,24 @@ const EditPost : React.FC = () => {
     if (id) fetchPostData();
   }, [id]);
 
+  useEffect(() => {
+    addCustomButtonLabel();
+  }, []);
+
   if (loading) return <div>Loading...</div>;
 
   const handleSave = async () => {
     try {
+      await refreshAuthToken();
       const response = await axios.put(`${apiUrl}/api/blog/${id}`, 
         { title, content, author },
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           }          
-        });
+        }
+      );
+
       setEditBlogPost(response.data);
       navigate("/platform");
     } catch (error) {
@@ -101,7 +105,7 @@ const EditPost : React.FC = () => {
     <div style={{ maxWidth: '800px', margin: '50px auto' }}>
       <h3>Edit Current Post</h3>
       <div style={{ marginBottom: '20px' }}>
-        <label>Title:</label>
+        <label>Title:</label><br/>
         <input 
           type='text'
           value={title}

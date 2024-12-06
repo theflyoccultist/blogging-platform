@@ -10,6 +10,7 @@ import Register from './pages/Register';
 const BlogPosts = lazy(() => import('./pages/Platform'));
 const CreatePost = lazy(() => import('./pages/PostCreate'));
 const EditPost = lazy (() => import('./pages/PostEdit'));
+const TagManager = lazy (() => import('./pages/TagManager'))
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -33,6 +34,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
               <Route path='/editpost/:id' element={
                 <Suspense fallback={<div>Loading...</div>}>
                 <EditPost />          
+                </Suspense>
+                } />
+              <Route path='/tags' element={
+                <Suspense fallback={<div>Loading tags...</div>}>
+                <TagManager />          
                 </Suspense>
                 } />
             </Route>

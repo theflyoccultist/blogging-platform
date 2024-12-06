@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.2.1] - 2024-12.06
+### Fixed
+- Fixed an issue where after more than 10 minutes of idle time, API calls from PostEdit and PostCreate returned a 401 error.
+- Set the character input limit of the login and register forms to 30.
+- Tag manager was started, but no changes to the backend.
+
 ## [1.2.0] - 2024-11.28
 ### Added
 - Lazy loading for the blogging platform.

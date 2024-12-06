@@ -48,7 +48,7 @@ sequelize.authenticate()
 
 app.use('/backend/auth', authRoutes);
 app.use('/backend/api', limiter, preventCache, blogPostRoutes);
-app.use('/backend/tags', limiter, preventCache, tagRoutes);
+app.use('/backend/api/tags', limiter, preventCache, tagRoutes);
 
 app.get('/backend', (req : Request, res : Response) => {
     res.send('Hello from backend route!')

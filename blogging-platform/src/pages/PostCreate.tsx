@@ -2,6 +2,7 @@ import React, { useRef, useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import { quillModules, addCustomButtonLabel } from "../components/quillToolbarConfig";
+import { refreshAuthToken } from "../middlewares/tokenRefresher";
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import '../styles/Platform.css'
@@ -15,7 +16,7 @@ const CreatePost : React.FC = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         addCustomButtonLabel();
@@ -40,6 +41,7 @@ const CreatePost : React.FC = () => {
         }
 
         try {
+            await refreshAuthToken();
             const response = await axios.post(`${apiUrl}/api/blog`,
                 { title, content, author },
                 {
@@ -48,11 +50,12 @@ const CreatePost : React.FC = () => {
                     },
                 }
             );
+
             resetForm();
             navigate("/platform");
             console.log("Post created successfully:", response.data);
         } catch (error) {
-            console.error('Error editing post', error);
+            console.error('Error creating post', error);
             setError('Failed to create post. Please try again.')
         }
     };
@@ -64,7 +67,7 @@ const CreatePost : React.FC = () => {
             {error && <div style={{ color: 'red', marginBottom: '10px'}}>{error}</div>}
 
             <div style={{ marginBottom: '20px' }}>
-            <label>TItle:</label>
+            <label>TItle:</label><br/>
             <input 
                 type='text'
                 value={title}

@@ -42,7 +42,7 @@ const Sidebar: React.FC = () => {
             <CDBSidebarContent className="sidebar-content">
                 <CDBSidebarMenu>
                     <CDBSidebarMenuItem>Dashboard</CDBSidebarMenuItem>
-                    <CDBSidebarMenuItem>Components</CDBSidebarMenuItem>
+                    <CDBSidebarMenuItem>Tags</CDBSidebarMenuItem>
                     <CDBSidebarMenuItem>Metrics</CDBSidebarMenuItem>
                 </CDBSidebarMenu>
             </CDBSidebarContent>

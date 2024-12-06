@@ -39,6 +39,7 @@ const Login: React.FC = () => {
                         type='text'
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
+                        maxLength={30}
                         required
                     />
                 </div>
@@ -48,6 +49,7 @@ const Login: React.FC = () => {
                         type='password'
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        maxLength={30}
                         required
                     />
                 </div>
