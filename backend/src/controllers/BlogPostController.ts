@@ -3,6 +3,7 @@ import { BlogPost } from "../models/BlogPost";
 
 interface BlogPostAttributes {
     title: string;
+    thumbnail: string;
     content: string;
     author: string;
     publishedAt: Date;
@@ -35,10 +36,11 @@ export const getBlogPost = async (req: Request, res: Response): Promise<void> =>
 
 export const createBlogPost = async (req: Request<{}, {}, BlogPostAttributes>, res: Response) => {
     try {
-        const { title, content, author, publishedAt } = req.body;
+        const { title, thumbnail, content, author, publishedAt } = req.body;
 
         const blog = await BlogPost.create({
             title,
+            thumbnail,
             content,
             author,
             publishedAt,

@@ -7,6 +7,7 @@ import axios from 'axios';
 interface BlogPost {
   id: number;
   title: string;
+  thumbnail: string;
   content: string;
   author: string;
   publishedAt: string;

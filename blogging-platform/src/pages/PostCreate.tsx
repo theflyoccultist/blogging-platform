@@ -14,6 +14,7 @@ const CreatePost : React.FC = () => {
     const navigate = useNavigate();
     const quillRef = useRef<ReactQuill>(null);
     const [title, setTitle] = useState('');
+    const [thumbnail, setThumbnail] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
     const [error, setError] = useState<string | null>(null);
@@ -24,6 +25,7 @@ const CreatePost : React.FC = () => {
 
     const resetForm = () => {
         setTitle('');
+        setThumbnail('');
         setContent('');
         setAuthor('');
         setError(null);
@@ -43,7 +45,7 @@ const CreatePost : React.FC = () => {
         try {
             await refreshAuthToken();
             const response = await axios.post(`${apiUrl}/api/blog`,
-                { title, content, author },
+                { title, thumbnail, content, author },
                 {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -67,11 +69,27 @@ const CreatePost : React.FC = () => {
             {error && <div style={{ color: 'red', marginBottom: '10px'}}>{error}</div>}
 
             <div style={{ marginBottom: '20px' }}>
-            <label>TItle:</label><br/>
+            <label>Title:</label><br/>
             <input 
                 type='text'
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                style={{
+                    width: '100%',
+                    padding: '10px',
+                    fontSize: '18px',
+                    marginTop: '5px',
+                }}
+            />    
+            </div>
+            
+            <div style={{ marginBottom: '20px' }}>
+            <label>Thumbnail:</label><br/>
+            <div className="mb-2 text-muted">Add your image URL here</div>
+            <input 
+                type='text'
+                value={thumbnail}
+                onChange={(e) => setThumbnail(e.target.value)}
                 style={{
                     width: '100%',
                     padding: '10px',

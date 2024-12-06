@@ -47,7 +47,7 @@ database_1.sequelize.authenticate()
 });
 app.use('/backend/auth', index_1.default);
 app.use('/backend/api', rateLimit_1.limiter, preventCache_1.preventCache, blogpostroutes_1.default);
-app.use('/backend/tags', rateLimit_1.limiter, preventCache_1.preventCache, tagroutes_1.default);
+app.use('/backend/api/tags', rateLimit_1.limiter, preventCache_1.preventCache, tagroutes_1.default);
 app.get('/backend', (req, res) => {
     res.send('Hello from backend route!');
 });

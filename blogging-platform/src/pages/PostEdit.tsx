@@ -11,6 +11,7 @@ import '../styles/Platform.css';
 interface EditBlogPost {
   id: number;
   title: string;
+  thumbnail: string;
   content: string;
   author: string;
 }
@@ -25,6 +26,7 @@ const EditPost : React.FC = () => {
 
   const [editBlogPost, setEditBlogPost] = useState<EditBlogPost | null>(null);
   const [title, setTitle] = useState('');
+  const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
 
@@ -43,6 +45,7 @@ const EditPost : React.FC = () => {
           },
         });
         setTitle(response.data.title);
+        setThumbnail(response.data.thumbnail);
         setContent(response.data.content);
         setAuthor(response.data.author);
       } catch (error) {
@@ -64,7 +67,7 @@ const EditPost : React.FC = () => {
     try {
       await refreshAuthToken();
       const response = await axios.put(`${apiUrl}/api/blog/${id}`, 
-        { title, content, author },
+        { title, thumbnail, content, author },
         {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
@@ -117,6 +120,22 @@ const EditPost : React.FC = () => {
             marginTop: '5px',
           }}
         />
+      </div>
+
+      <div style={{ marginBottom: '20px' }}>
+            <label>Thumbnail:</label><br/>
+            <div className="mb-2 text-muted">Add your image URL here</div>
+            <input 
+                type='text'
+                value={thumbnail}
+                onChange={(e) => setThumbnail(e.target.value)}
+                style={{
+                    width: '100%',
+                    padding: '10px',
+                    fontSize: '18px',
+                    marginTop: '5px',
+                }}
+            />    
       </div>
 
       <div style={{ marginBottom: '20px' }}>

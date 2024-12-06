@@ -16,6 +16,10 @@ BlogPost.init({
         type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
+    thumbnail: {
+        type: sequelize_1.DataTypes.STRING,
+        allowNull: true,
+    },
     content: {
         type: sequelize_1.DataTypes.TEXT,
         allowNull: false,

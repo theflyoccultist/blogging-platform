@@ -40,9 +40,10 @@ const getBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 exports.getBlogPost = getBlogPost;
 const createBlogPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, content, author, publishedAt } = req.body;
+        const { title, thumbnail, content, author, publishedAt } = req.body;
         const blog = yield BlogPost_1.BlogPost.create({
             title,
+            thumbnail,
             content,
             author,
             publishedAt,
