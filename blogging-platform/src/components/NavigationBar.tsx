@@ -8,7 +8,7 @@ const NavigationBar: React.FC = () => {
       <div className="navbar">
       <Navbar className="bg-body-tertiary Navbar">
       <Container>
-        <Navbar.Brand style={{ marginLeft: '250px' }}>Posts</Navbar.Brand>
+        <Navbar.Brand style={{ marginLeft: '250px' }}>Click on a post to add modifications</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Navbar.Text>

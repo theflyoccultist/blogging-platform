@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { CDBTable, CDBTableHeader, CDBTableBody, CDBContainer } from 'cdbreact';
 import '../styles/Platform.css'
 import axios from 'axios';
+import Pagination from './Pagination';
 
 interface BlogPost {
   id: number;
@@ -17,6 +18,9 @@ const apiUrl = import.meta.env.VITE_API_URL;
 
 const Table: React.FC = () => {
     const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
+    const itemsPerPage = 10;
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,6 +33,7 @@ const Table: React.FC = () => {
             });
             console.log('blog posts fetched', response.data);
             setBlogPosts(response.data);
+            setTotalPages(Math.ceil(response.data.length / itemsPerPage));
         } catch (error) {
             console.error('Error fetching blog posts', error);
         }
@@ -36,15 +41,19 @@ const Table: React.FC = () => {
       fetcBlogPosts();
     }, []);
 
+    const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+    }
+
     const handleRowClick = (id: number) => {
       navigate(`/editpost/${id}`); // Redirect to the edit page
     }
 
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentItems = blogPosts.slice(startIndex, startIndex + itemsPerPage);
+
     return (
-      <div>
-        {/* Table with blog posts */}
-      <div style={{ marginTop: '80px' }}>
-        <h3>Click on a post to add modifications</h3>
+      <div style={{marginTop: "80px"}}>
       <CDBContainer>
         <CDBTable hover>
           <CDBTableHeader>
@@ -53,13 +62,13 @@ const Table: React.FC = () => {
               <th>Post Title</th>
               <th>Status</th>
               <th>Author</th>
-              <th>Date_Issued</th>
+              <th>Date Issued</th>
               <th>Tags</th>
             </tr>
           </CDBTableHeader>
           <CDBTableBody>
-            {Array.isArray(blogPosts) && blogPosts.length > 0 ? (
-              blogPosts.map((blog, key) => {
+            {Array.isArray(currentItems) && currentItems.length > 0 ? (
+              currentItems.map((blog, key) => {
                 const isoDateString = blog.publishedAt;
                 const dateObject = new Date(isoDateString);
                 const formattedDate = dateObject.toDateString();
@@ -83,8 +92,14 @@ const Table: React.FC = () => {
             )}
           </CDBTableBody>
         </CDBTable>
+          <div style={{ position:'fixed', bottom:'0px'}}>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          </div>
       </CDBContainer>      
-      </div>
       </div>
   );
 };

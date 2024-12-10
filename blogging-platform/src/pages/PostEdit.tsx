@@ -1,8 +1,7 @@
-import React, { useRef, useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-import ReactQuill from 'react-quill';
-import { quillModules, addCustomButtonLabel } from "../components/quillToolbarConfig";
+import Editor from "../components/Editor";
 import { refreshAuthToken } from '../middlewares/tokenRefresher';
 import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
@@ -21,7 +20,6 @@ const apiUrl = import.meta.env.VITE_API_URL;
 const EditPost : React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const quillRef = useRef<ReactQuill>(null);
   const [loading, setLoading] = useState(true);
 
   const [editBlogPost, setEditBlogPost] = useState<EditBlogPost | null>(null);
@@ -29,11 +27,6 @@ const EditPost : React.FC = () => {
   const [thumbnail, setThumbnail] = useState('');
   const [content, setContent] = useState('');
   const [author, setAuthor] = useState('');
-
-  const memorizedModules = useMemo(
-    () => quillModules(quillRef),
-    [quillRef]
-);
 
   useEffect(() => {
     const fetchPostData = async () => {
@@ -56,10 +49,6 @@ const EditPost : React.FC = () => {
     };
     if (id) fetchPostData();
   }, [id]);
-
-  useEffect(() => {
-    addCustomButtonLabel();
-  }, []);
 
   if (loading) return <div>Loading...</div>;
 
@@ -140,12 +129,9 @@ const EditPost : React.FC = () => {
 
       <div style={{ marginBottom: '20px' }}>
           <label>Content:</label>
-          <ReactQuill
-            ref={quillRef}
+          <Editor
             value={content} 
-            onChange={setContent} 
-            style={{ height: '300px' }}
-            modules={memorizedModules}
+            handleChange={setContent}
           />
       </div>
 

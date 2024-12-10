@@ -72,7 +72,5 @@ Phase 5: Testing & Deployment
         ✔Deploy the blog platform separately from the portfolio.
         ✔Ensure that the /blog endpoint on your portfolio correctly fetches posts from the live API.
 
-Fix a bug where the code button is clickable in PostEdit, but isn't visible.
-
 how to update db with new column
 npx sequelize-cli db:migrate --env production

@@ -4,7 +4,6 @@ import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../components/Sidebar'
 import NavigationBar from "../components/NavigationBar";
 import Table from "../components/Table";
-import Footer from "../components/Footer";
 
 const BlogPosts: React.FC = () => {
 
@@ -25,10 +24,6 @@ const BlogPosts: React.FC = () => {
                     </Col>
                 </Row>
             </Container>
-
-            <footer>
-                <Footer />
-            </footer>
         </div>
     );
 };
