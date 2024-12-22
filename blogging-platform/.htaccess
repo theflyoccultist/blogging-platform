@@ -3,9 +3,12 @@
   RewriteEngine On
   RewriteBase /
 
-  # Force HTTPS
-  RewriteCond %{HTTPS} !=on
-  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  # Force HTTPS and www
+  RewriteCond %{HTTP_HOST} !^www\.
+  RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
+  
+  RewriteCond %{HTTPS} off
+  RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
   # Serve static files directly if they exist
   RewriteCond %{REQUEST_FILENAME} -f
