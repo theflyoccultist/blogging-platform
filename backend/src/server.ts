@@ -20,7 +20,7 @@ const allowedOrigins = [
 ];
 
 app.use((req, res, next) => {
-    const origin = req.headers.origin;
+    const origin = req.headers.origin || `https://${req.headers.host}`;
 
     if (allowedOrigins.includes(origin)) {
         cors({
