@@ -14,19 +14,22 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
+const allowedOrigins = [
+    'https://www.rinkakuworks.com',
+    'https://www.blogging-platform.rinkakuworks.com'
+];
+
 app.use((req, res, next) => {
-    if (req.method === 'GET' && req.headers.origin === 'https://www.rinkakuworks.com') {
+    const origin = req.headers.origin || `https://${req.headers.host}`;
+
+    if (allowedOrigins.includes(origin)) {
         cors({
-            origin: 'https://www.rinkakuworks.com',
-            methods: ['GET'],
-            credentials: false
+            origin: origin, // Dynamically set the origin
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            credentials: origin === 'https://www.blogging-platform.rinkakuworks.com' // Allow credentials only for blogging-platform
         })(req, res, next);
     } else {
-        cors({
-            origin: 'https://www.blogging-platform.rinkakuworks.com',
-            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-            credentials: true
-        })(req, res, next);
+        res.status(403).json({ message: 'Origin not allowed by CORS' });
     }
 });
 
