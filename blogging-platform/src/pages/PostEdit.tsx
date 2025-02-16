@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Editor from "../components/Editor";
 import { refreshAuthToken } from '../middlewares/tokenRefresher';
-import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import '../styles/Platform.css';
 
@@ -71,8 +70,9 @@ const EditPost : React.FC = () => {
     }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (editBlogPost) {
+      await refreshAuthToken();
       setTitle(editBlogPost.title);
       setContent(editBlogPost.content);
       setAuthor(editBlogPost.author);
@@ -81,6 +81,7 @@ const EditPost : React.FC = () => {
 
   const handleDelete = async () => {
     try {
+      await refreshAuthToken();
       await axios.delete(`${apiUrl}/api/blog/${id}`,
         {
           headers: {

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Editor from "../components/Editor";
 import { refreshAuthToken } from "../middlewares/tokenRefresher";
-import 'react-quill/dist/quill.snow.css';
 import axios from 'axios';
 import '../styles/Platform.css'
 import { Button } from "react-bootstrap";
