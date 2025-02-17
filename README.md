@@ -6,8 +6,8 @@ A full-stack blogging platform built using React, Node.js, Express, and PostgreS
 - Create, edit, and delete blog posts
 - Secure authentication for managing blog content
 - Public-facing interface to view posts
-- Pagination and search for blog posts (coming soon)
-- Rich text editor for creating content (planned)
+- Pagination for blog posts
+- Simple markdown editor for creating content
 
 ## Tech Stack
 ### Frontend:
@@ -53,8 +53,4 @@ A full-stack blogging platform built using React, Node.js, Express, and PostgreS
     ```bash
     npm start
     ```
-
-## Future Enhancements
-- Implement blog analytics for tracking post engagement
-- Add user comment functionality
 - Improve SEO and metadata management for blog posts
