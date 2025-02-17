@@ -39,7 +39,7 @@ router.post('/refresh', (req, res) => __awaiter(void 0, void 0, void 0, function
             return;
         }
         const token = jsonwebtoken_1.default.sign({ id: tokenRecord.userId }, process.env.JWT_SECRET, {
-            expiresIn: '15m',
+            expiresIn: '1d',
         });
         const newRefreshToken = (0, uuid_1.v4)();
         const newExpiresAt = new Date();
