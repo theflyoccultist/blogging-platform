@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.4.0] - 2025-02-17
+### Fixed
+- **No longer using React Quill:**
+  - I figured out it was just better to use a markdown editor instead of dealing with this overengineered text editor. What kind of programmer wants a Rich Text Editor when we just want to be writing markdown? A simple text dialog implementation will never cause torment and harm to the developer either.
+- **Refresh token issues fixed**
+  - A very simple way to fix this issue: make the refresh token longer. It's less secure but logging out still works like before.
+
+### Final thoughts
+- **Final Version**
+  - This is the final version of this blog platform. I am constantly fixing bugs every time I attempt to add a feature into this bloated mess, and I am saving my mental health by considering it finished. This means that there are many abandonned features that has been pushed into the black hole by git reverts, but it is better like this and move on to more exciting projects.
+
 ## [1.3.0] - 2024-12-10
 ### Added
 - **Thumbnail Support:** Introduced a "thumbnail" column in the database and an input field for image links. Adding a thumbnail is now optional.
