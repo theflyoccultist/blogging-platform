@@ -32,7 +32,7 @@ router.post('/refresh', async (req: Request, res: Response) => {
         }
 
         const token = jwt.sign({ id: tokenRecord.userId }, process.env.JWT_SECRET as string, {
-            expiresIn: '15m',
+            expiresIn: '1d',
         });
 
         const newRefreshToken = uuidv4();
