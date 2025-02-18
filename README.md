@@ -1,6 +1,6 @@
 # Blogging Platform
 
-A full-stack blogging platform built using React, Node.js, Express, and PostgreSQL, designed to integrate seamlessly into my portfolio. This platform will serve as a place to document my coding journey and demonstrate my expertise in web development, with an emphasis on scalable architecture and efficient data management.
+A full-stack blogging platform built using React, Node.js, Express, and PostgreSQL, designed to integrate seamlessly into my portfolio. This platform will serve as a place to document my coding journey and demonstrate my expertise in software development, with an emphasis on scalable architecture and efficient data management.
 
 ## Features
 - Create, edit, and delete blog posts
@@ -53,4 +53,3 @@ A full-stack blogging platform built using React, Node.js, Express, and PostgreS
     ```bash
     npm start
     ```
-- Improve SEO and metadata management for blog posts
