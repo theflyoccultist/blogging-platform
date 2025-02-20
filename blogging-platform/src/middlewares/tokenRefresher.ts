@@ -34,7 +34,7 @@ export const startTokenRefresh = () => {
             console.log("Error: Could not refresh token, logging out");
             window.location.href = '/login';
         }
-    }, 10 * 60 * 1000);
+    }, 24 * 60 * 60 * 1000);
 };
 
 export const stopTokenRefresh = () => {
