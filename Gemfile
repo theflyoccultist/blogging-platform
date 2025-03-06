@@ -1,0 +1,11 @@
+source 'https://rubygems.org'
+
+gem 'sinatra'
+gem 'puma'
+gem 'dotenv'
+gem 'jwt'
+gem 'bcrypt'
+gem 'rack-attack'
+gem 'pg'
+gem 'rspec'
+gem 'rack-test'
