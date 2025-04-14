@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 require 'sinatra'
-require 'rack/attack"
 require './app'
 
 run Sinatra::Application
-use Rack::Attack
+
