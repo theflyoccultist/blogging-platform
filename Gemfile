@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
-gem 'sinatra', require: 'sinatra/json'
-gem 'puma'
+gem 'bcrypt'
 gem 'dotenv'
 gem 'jwt'
-gem 'bcrypt'
-gem 'rack-attack'
 gem 'pg'
-gem 'rspec'
+gem 'puma'
+gem 'rack-attack'
 gem 'rack-test'
+gem 'rspec'
+gem 'sinatra', require: 'sinatra/json'

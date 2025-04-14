@@ -1,0 +1,46 @@
+<form id="text-editor">
+  <h4> <%= @post ? "Edit Article" : "Create New Article" %></h4>
+
+  <input type="hidden" name="id" value="<%= @post ? @post['id']: '1' %>" />
+
+  <input type="text" id="Title" name="title" value="<%= @post ? @post['title']: '' %>" placeholder="Title" maxlength="100" required />
+
+  <input type="text" id="Thumbnail" name="thumbnail"  value="<%= @post ? @post['thumbnail']: '' %>" placeholder="Thumbnail URL" maxlength="200" />
+
+  <textarea id="Post" name="content" maxlength="10000" required />
+  <%= @post ? @post['content'] : '' %>
+  </textarea>
+
+  <input type="text" id="Author" name="author"  value="<%= @post ? @post['author']: '' %>" placeholder="Who dares write this?" maxlength="50" required />
+</form>
+
+<section class="buttons">
+
+  <button 
+    hx-delete="/api/<%= @post ? @post['id']: '1' %>"
+    hx-confirm="Are you sure you want to delete this post?"
+    hx-swap="outerHTML">
+  <img src="/static/recycle_bin.png" alt="Delete icon" class="button-icon">
+    Delete
+  </button>
+
+  <% if @post %>
+    <button
+      hx-put="/api/<%= @post['id'] %>"
+      hx-include="#Title, #Thumbnail, #Post, #Author"
+      hx-swap="outerHTML">
+      <img src="/static/floppy.png" alt="Save icon" class="button-icon">
+      Save
+    </button>
+  <% else %>
+    <button
+      hx-post="/api"
+      hx-include="#Title, #Thumbnail, #Post, #Author"
+      hx-swap="outerHTML">
+      <img src="/static/floppy.png" alt="Save icon" class="button-icon">
+      Save
+    </button> 
+  <% end %>
+
+</section>
+

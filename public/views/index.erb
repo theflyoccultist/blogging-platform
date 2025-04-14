@@ -1,0 +1,45 @@
+<h2>Welcome To My Blogging Platform!</h2>
+<h4>Click on a post to edit it</h4>
+  <div class="sunken-panel">
+    <table>
+      <thead>
+        <tr>
+          <th>Post Title</th>
+          <th>Status</th>
+          <th>Author</th>
+        </tr>
+      </thead>
+      <tbody>
+      
+        <% if @posts.empty? %>
+          <tr>
+            <td colspan="3" style="text-slign: center;">No posts yet. Click "Create an article" to get started.</td>
+          </tr>
+        <% else %>
+          <% @posts.first(10).each do |post| %>
+            <tr class="article" 
+              hx-get="/article/<%= post['id'] %>" 
+              hx-target="#content"
+              hx-swap="innerHTML"
+              hx-push-url="true">
+            <td><%= post['title'] %></td> 
+            <td><%= post['is_public'] ? 'Published' : 'Draft' %></td>
+            <td><%= post['author'] %></td>
+            </tr>
+          <% end %>
+        <% end %>
+
+      </tbody>
+    </table>
+  </div>
+
+  <div class="buttons">
+    <button hx-get="/article" 
+            hx-target="#content" 
+            hx-swap="innerHTML" 
+            hx-push-url="true">
+            Create An Article
+    </button>
+  </div>
+
+

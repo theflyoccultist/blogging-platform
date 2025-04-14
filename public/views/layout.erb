@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Retro Blogging Platform</title>
+    <link rel="stylesheet" href="/static/98&XP/98.css">
+    <link rel="icon" href="/static/favicon.ico">
+
+    <script src="/static/htmx.min.js"></script>
+    <style>
+      @keyframes crt-flicker {
+        0% { opacity: 1; }
+        50% { opacity: 0.97; }
+        100% { opacity: 1; }
+      }  
+      body {
+        animation: crt-flicker 0.1s infinite alternate;
+        background-color: #008080;
+        cursor: url('/static/cursors/arrow.cur'), auto;
+      }
+      a, button:hover {
+        cursor: url('/static/cursors/Cursor_15.cur'), auto;
+      }
+      h2, h3 {
+        text-align: center;
+      }
+      h4 {
+        text-align: center;
+        font-family: "Comic Sans MS", cursive, sans-serif;
+      }
+      .sunken-panel {
+        box-sizing: border-box;
+        background-color: #fff;
+        padding: 5px;
+        border-width: 2px;
+        border-style: inset;
+        border-color: #dfdfdf #808080 #808080 #dfdfdf;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #c0c0c0;
+      }
+      thead {
+        background: #dfdfdf;
+        box-shadow: inset 1px 1px white, inset -1px -1px #808080;
+        text-align: left;
+        padding: 2px;
+        font-weight: bold;
+      }
+      th, td {
+        padding: 5px;
+        border: 1px solid #808080;
+      }
+      .buttons {
+        display: flex;
+        justify-content: center;
+        padding: 1em 0;
+        gap: 1em;
+      }
+      .button-icon {
+        height: 1em;
+        vertical-align: sub;
+        margin-right: 0.5em;
+      }
+      @media (max-width: 800px) {
+        .buttons {
+          flex-direction: column;
+        }
+      }
+      #text-editor {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; 
+      }
+      textarea {
+        height: 300px;
+        resize: vertical;
+      }
+      .article:hover {
+        background-color: #a0a0a0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="window">
+      <div class="title-bar">
+        <div class="title-bar-text">My Blogging Platform</div>
+        <div class="title-bar-controls">
+          <button aria-label="Minimize"></button>
+          <button aria-label="Maximize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      
+      <div class="window-body" style="justify-content: center; width: 80%; margin: 0 auto;">
+        <div id="content">
+          <%= yield %>
+        </div>
+        <%= erb :footer %>
+      </div>
+
+    </div>
+  </body>
+</html>
+
