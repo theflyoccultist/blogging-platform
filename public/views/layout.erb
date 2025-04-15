@@ -17,10 +17,6 @@
       body {
         animation: crt-flicker 0.1s infinite alternate;
         background-color: #008080;
-        cursor: url('/static/cursors/arrow.cur'), auto;
-      }
-      a, button:hover {
-        cursor: url('/static/cursors/Cursor_15.cur'), auto;
       }
       h2, h3 {
         text-align: center;
@@ -52,6 +48,7 @@
       th, td {
         padding: 5px;
         border: 1px solid #808080;
+        cursor: pointer;
       }
       .buttons {
         display: flex;
@@ -68,6 +65,9 @@
         .buttons {
           flex-direction: column;
         }
+      }
+      .field-row {
+        gap: 30px;
       }
       #text-editor {
         display: flex;

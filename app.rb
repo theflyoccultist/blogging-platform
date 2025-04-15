@@ -58,7 +58,10 @@ get '/' do
     conn.exec("SELECT * FROM blogging_schema.posts
       ORDER BY created_at DESC")
   end
-  @posts = result.to_a
+  @posts = result.map do |row|
+    row['is_public'] = row['is_public'] == 't' # pg returns 't'/'f' as strings
+    row
+  end
 
   smart_template(:index)
 end
@@ -97,11 +100,13 @@ get '/api' do
 end
 
 post '/api' do
+  is_public = params[:is_public] == 'true'
+
   db_safe do
     conn.exec_params(
-      "INSERT INTO blogging_schema.posts (title, thumbnail, content, author)
-        VALUES ($1, $2, $3, $4)",
-      [params[:title], params[:thumbnail], params[:content], params[:author]]
+      "INSERT INTO blogging_schema.posts (title, thumbnail, content, author, is_public)
+        VALUES ($1, $2, $3, $4, $5)",
+      [params[:title], params[:thumbnail], params[:content], params[:author], is_public]
     )
   end
 
@@ -109,13 +114,15 @@ post '/api' do
 end
 
 put '/api/:id' do
+  is_public = params[:is_public] == 'true'
+
   db_safe do
     conn.exec_params(
       "UPDATE blogging_schema.posts
-          SET title = $1, thumbnail = $2, content = $3, author = $4
-        WHERE id = $5",
+          SET title = $1, thumbnail = $2, content = $3, author = $4, is_public = $5
+        WHERE id = $6",
       [params[:title], params[:thumbnail], params[:content], params[:author],
-       params[:id]]
+       is_public, params[:id]]
     )
   end
 
