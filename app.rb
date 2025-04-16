@@ -4,6 +4,8 @@ require 'sinatra'
 require 'dotenv/load'
 require 'pg'
 
+enable :sessions
+
 # Database connection
 conn = PG.connect(ENV['DATABASE_URL'])
 
@@ -26,9 +28,13 @@ helpers do
   end
 
   # Helper for page redirection
-  def redirect
+  def hx_redirect
     response.headers['HX-Redirect'] = '/'
     status 200
+  end
+
+  def logged_in?
+    !!session[:user_id]
   end
 end
 
@@ -53,9 +59,54 @@ conn.exec_params(
     );"
 )
 
+get '/login' do
+  erb :login
+end
+
+get '/register' do
+  erb :register
+end
+
+post '/register' do
+  existing_user = db_safe do
+    conn.exec_params("SELECT * FROM blogging_schema.users
+    LIMIT 1").first
+  end
+
+  if existing_user
+    halt 403, 'User have already been created'
+  else
+    conn.exec_params(
+      "INSERT INTO blogging_schema.users (username, password)
+       VALUES ($1, $2)", [params[:username], params[:password]]
+    )
+    redirect '/'
+  end
+end
+
+post '/login' do
+  user = db_safe do
+    conn.exec_params("SELECT * FROM blogging_schema.users
+    WHERE username = $1", [params[:username]]).first
+  end
+
+  if user && user['password'] == params[:password]
+    session[:user_id] = user['id']
+    redirect '/'
+  else
+    @error = true
+    redirect '/login'
+  end
+end
+
+get '/logout' do
+  session.clear
+  smart_template(:login)
+end
+
 get '/' do
   result = db_safe do
-    conn.exec("SELECT * FROM blogging_schema.posts
+    conn.exec_params("SELECT * FROM blogging_schema.posts
       ORDER BY created_at DESC")
   end
   @posts = result.map do |row|
@@ -88,13 +139,14 @@ end
 # 10 posts per page
 get '/api' do
   db_safe do
-    page = (params[:page] || 1).to_i
-    offset = (page - 1) * 10
+    cursor = params[:cursor] || Time.now.iso8601
     conn.exec_params(
-      "SELECT * FROM blogging_schema.posts
+      "SELECT id, title, thumbnail, created_at, content, is_public
+        FROM blogging_schema.posts
+        WHERE created_at < $1
         ORDER BY created_at DESC
-        LIMIT 10 OFFSET $1;",
-      [offset]
+        LIMIT 10;",
+      [cursor]
     ).map(&:to_h).to_json
   end
 end
@@ -110,7 +162,7 @@ post '/api' do
     )
   end
 
-  redirect
+  hx_redirect
 end
 
 put '/api/:id' do
@@ -126,7 +178,7 @@ put '/api/:id' do
     )
   end
 
-  redirect
+  hx_redirect
 end
 
 delete '/api/:id' do
@@ -137,7 +189,7 @@ delete '/api/:id' do
     )
   end
 
-  redirect
+  hx_redirect
 end
 
 set :public_folder, File.join(__dir__, 'public')

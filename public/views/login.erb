@@ -1,0 +1,12 @@
+<h2>Login</h2>
+
+<% if @error %>
+  <div class="error">Login failed.</div>
+<% end %>
+
+<form method="post" action="/login" id="access-form">
+  <input type="text" id="Username" name="username" placeholder="Username" />
+  <input type="password" id="Password" name="password" placeholder="Password" />
+
+  <button type="submit" class="button-icon">Login</button>
+</form>
