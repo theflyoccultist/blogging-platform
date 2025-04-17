@@ -3,6 +3,7 @@
 require 'sinatra'
 require 'dotenv/load'
 require 'pg'
+require 'bcrypt'
 
 enable :sessions
 
@@ -67,6 +68,21 @@ get '/register' do
   erb :register
 end
 
+post '/login' do
+  user = db_safe do
+    conn.exec_params("SELECT * FROM blogging_schema.users
+    WHERE username = $1", [params[:username]]).first
+  end
+
+  if user && BCrypt::Password.new(user['password']) == params[:password]
+    session[:user_id] = user['id']
+    redirect '/'
+  else
+    @error = true
+    smart_template(:login)
+  end
+end
+
 post '/register' do
   existing_user = db_safe do
     conn.exec_params("SELECT * FROM blogging_schema.users
@@ -76,32 +92,23 @@ post '/register' do
   if existing_user
     halt 403, 'User have already been created'
   else
+    hashed_password = BCrypt::Password.create(params[:password]).to_s
+
     conn.exec_params(
       "INSERT INTO blogging_schema.users (username, password)
-       VALUES ($1, $2)", [params[:username], params[:password]]
+       VALUES ($1, $2)", [params[:username], hashed_password]
     )
     redirect '/'
   end
 end
 
-post '/login' do
-  user = db_safe do
-    conn.exec_params("SELECT * FROM blogging_schema.users
-    WHERE username = $1", [params[:username]]).first
-  end
-
-  if user && user['password'] == params[:password]
-    session[:user_id] = user['id']
-    redirect '/'
-  else
-    @error = true
-    redirect '/login'
-  end
-end
-
-get '/logout' do
+delete '/logout' do
   session.clear
   smart_template(:login)
+end
+
+before %r{/(?!login|register|api).*} do
+  halt 403 unless logged_in?
 end
 
 get '/' do
@@ -157,7 +164,7 @@ post '/api' do
   db_safe do
     conn.exec_params(
       "INSERT INTO blogging_schema.posts (title, thumbnail, content, author, is_public)
-        VALUES ($1, $2, $3, $4, $5)",
+      VALUES ($1, $2, $3, $4, $5)",
       [params[:title], params[:thumbnail], params[:content], params[:author], is_public]
     )
   end
