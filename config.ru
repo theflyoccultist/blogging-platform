@@ -2,8 +2,10 @@
 
 require 'sinatra'
 require './app'
+require './rate_limiter'
 
-run Sinatra::Application
+use RateLimiter, limit: 100, period: 60
+run MyApp
 
 use Rack::Session::Cookie,
     key: 'rack.Session',
