@@ -8,10 +8,11 @@ A server side rendered blogging platform using Ruby, HTMX and PostgreSQL, design
 - Create, edit, and delete blog posts
 - View blog posts and setup their status (Draft: Private, Published: Public)
 - Simple markdown editor for creating content
+- Secure authentication
 - Fabulous Windows 98 aesthetic
 
 ## Upcoming
-- Secure authentication (when it'll be done, only one user can post articles, and the rest can view the platform without making modifications.)
+- Rate Limiting
 - A live markdown previewer (for the article editor)
 
 ## Tech Stack

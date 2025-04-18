@@ -1,0 +1,25 @@
+<style>
+  #denied {
+    max-width: fit-content;
+    margin-inline: auto;
+    align-items: center;
+    display: grid;
+  }
+</style>
+
+<h2>Access Denied!</h2>
+
+<div id="denied">
+  <p>Try logging in to access this page.</p>
+  
+  <button hx-get="/login"
+        hx-target="#content"
+        hx-push-url="true"
+        id="login-button">
+  Login
+</button>
+</div>
+
+
+
+

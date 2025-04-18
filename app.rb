@@ -61,11 +61,11 @@ conn.exec_params(
 )
 
 get '/login' do
-  erb :login
+  smart_template(:login)
 end
 
 get '/register' do
-  erb :register
+  smart_template(:register)
 end
 
 post '/login' do
@@ -107,8 +107,8 @@ delete '/logout' do
   smart_template(:login)
 end
 
-before %r{/(?!login|register|api).*} do
-  halt 403 unless logged_in?
+before %r{/(?!login|register|api|denied).*} do
+  halt 403, smart_template(:denied) unless logged_in?
 end
 
 get '/' do
@@ -201,3 +201,7 @@ end
 
 set :public_folder, File.join(__dir__, 'public')
 set :views, File.join(settings.public_folder, 'views')
+
+set :environment, :production
+set :port, ENV.fetch('PORT', 8080)
+set :bind, '0.0.0.0'
