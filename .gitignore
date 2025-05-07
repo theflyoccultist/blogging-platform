@@ -1,3 +1,4 @@
 .nvim
 .env
 vendor/
+data/post.db

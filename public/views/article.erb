@@ -1,11 +1,11 @@
 <form id="text-editor">
   <h4> <%= @post ? "Edit Article" : "Create New Article" %></h4>
 
-  <input type="hidden" name="id" value="<%= @post ? @post['id']: '1' %>" />
+  <input type="hidden" name="id" value="<%= @post ? @post['id'] : '1' %>" />
 
-  <input type="text" id="Title" name="title" value="<%= @post ? @post['title']: '' %>" placeholder="Title (required)" maxlength="100" required />
+  <input type="text" id="Title" name="title" value="<%= @post ? @post['title'] : '' %>" placeholder="Title (required)" maxlength="100" required />
 
-  <input type="text" id="Thumbnail" name="thumbnail"  value="<%= @post ? @post['thumbnail']: '' %>" placeholder="Thumbnail URL" maxlength="200" />
+  <input type="text" id="Thumbnail" name="thumbnail"  value="<%= @post ? @post['thumbnail'] : '' %>" placeholder="Thumbnail URL" maxlength="200" />
 
   <textarea id="Post" name="content" maxlength="10000" required />
   <%= @post ? @post['content'] : '' %>

@@ -2,23 +2,21 @@
 
 require 'sinatra'
 require 'dotenv/load'
-require 'pg'
+require 'sqlite3'
 require 'bcrypt'
 
 enable :sessions
 
 # Database connection
-conn = PG.connect(ENV['DATABASE_URL'])
+begin
+  db = SQLite3::Database.new 'data/post.db'
+  db.results_as_hash = true
+rescue SQLite3::Exception => e
+  halt 500
+  puts "SQLite says: #{e.message}"
+end
 
 helpers do
-  # Error handling for PostgreSQL Queries
-  def db_safe
-    yield
-  rescue PG::Error => e
-    halt 500
-    puts "💀 PostgreSQL says: #{e.message}"
-  end
-
   # Helper to render views with or without layout based on HTMX requests.
   def smart_template(view)
     if request.env['HTTP_HX_REQUEST'] == 'true'
@@ -40,25 +38,25 @@ helpers do
 end
 
 # Initialize Database tables
-conn.exec_params(
-  "CREATE TABLE IF NOT EXISTS blogging_schema.posts (
-    id SERIAL PRIMARY KEY,
+db.execute <<~SQL
+  CREATE TABLE IF NOT EXISTS posts (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title TEXT NOT NULL,
     thumbnail TEXT,
     content TEXT NOT NULL,
     author TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT now(),
-    is_public BOOLEAN DEFAULT FALSE
-    );"
-)
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_public BOOLEAN DEFAULT 0
+    )
+SQL
 
-conn.exec_params(
-  "CREATE TABLE IF NOT EXISTS blogging_schema.users (
-    id SERIAL PRIMARY KEY,
+db.execute <<~SQL
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL
-    );"
-)
+    )
+SQL
 
 get '/login' do
   smart_template(:login)
@@ -69,10 +67,8 @@ get '/register' do
 end
 
 post '/login' do
-  user = db_safe do
-    conn.exec_params("SELECT * FROM blogging_schema.users
-    WHERE username = $1", [params[:username]]).first
-  end
+  user = db.execute("SELECT * FROM users
+    WHERE username = ?", [params[:username]]).first
 
   if user && BCrypt::Password.new(user['password']) == params[:password]
     session[:user_id] = user['id']
@@ -84,19 +80,15 @@ post '/login' do
 end
 
 post '/register' do
-  existing_user = db_safe do
-    conn.exec_params("SELECT * FROM blogging_schema.users
-    LIMIT 1").first
-  end
+  existing_user = db.execute('SELECT 1 FROM users LIMIT 1').first
 
   if existing_user
     halt 403, 'User have already been created'
   else
     hashed_password = BCrypt::Password.create(params[:password]).to_s
 
-    conn.exec_params(
-      "INSERT INTO blogging_schema.users (username, password)
-       VALUES ($1, $2)", [params[:username], hashed_password]
+    db.execute(
+      'INSERT INTO users (username, password) VALUES (?, ?)', [params[:username], hashed_password]
     )
     redirect '/'
   end
@@ -112,12 +104,10 @@ before %r{/(?!login|register|api|denied).*} do
 end
 
 get '/' do
-  result = db_safe do
-    conn.exec_params("SELECT * FROM blogging_schema.posts
+  result = db.execute("SELECT * FROM posts
       ORDER BY created_at DESC")
-  end
   @posts = result.map do |row|
-    row['is_public'] = row['is_public'] == 't' # pg returns 't'/'f' as strings
+    row['is_public'] = params[:is_public] == '1' ? 1 : 0
     row
   end
 
@@ -130,12 +120,10 @@ get '/article' do
 end
 
 get '/article/:id' do
-  result = db_safe do
-    conn.exec_params(
-      "SELECT * FROM blogging_schema.posts
-        WHERE id = $1 LIMIT 1", [params[:id]]
-    )
-  end
+  result = db.execute(
+    "SELECT * FROM posts
+        WHERE id = ? LIMIT 1", [params[:id]]
+  )
 
   @post = result.first
   halt 404, 'Post not found' unless @post
@@ -145,56 +133,48 @@ end
 
 # 10 posts per page
 get '/api' do
-  db_safe do
-    cursor = params[:cursor] || Time.now.iso8601
-    conn.exec_params(
-      "SELECT id, title, thumbnail, created_at, content, is_public
-        FROM blogging_schema.posts
-        WHERE created_at < $1
+  cursor = params[:cursor] || Time.now.iso8601
+  db.execute(
+    "SELECT id, title, thumbnail, created_at, content, is_public
+        FROM posts
+        WHERE created_at < ?
         ORDER BY created_at DESC
         LIMIT 10;",
-      [cursor]
-    ).map(&:to_h).to_json
-  end
+    [cursor]
+  ).map(&:to_h).to_json
 end
 
 post '/api' do
-  is_public = params[:is_public] == 'true'
+  is_public = params[:is_public].to_i
 
-  db_safe do
-    conn.exec_params(
-      "INSERT INTO blogging_schema.posts (title, thumbnail, content, author, is_public)
-      VALUES ($1, $2, $3, $4, $5)",
-      [params[:title], params[:thumbnail], params[:content], params[:author], is_public]
-    )
-  end
+  db.execute(
+    "INSERT INTO posts (title, thumbnail, content, author, is_public)
+      VALUES (?, ?, ?, ?, ?)",
+    [params[:title], params[:thumbnail], params[:content], params[:author], is_public]
+  )
 
   hx_redirect
 end
 
 put '/api/:id' do
-  is_public = params[:is_public] == 'true'
+  is_public = params[:is_public] == '1' ? 1 : 0
 
-  db_safe do
-    conn.exec_params(
-      "UPDATE blogging_schema.posts
-          SET title = $1, thumbnail = $2, content = $3, author = $4, is_public = $5
-        WHERE id = $6",
-      [params[:title], params[:thumbnail], params[:content], params[:author],
-       is_public, params[:id]]
-    )
-  end
+  db.execute(
+    "UPDATE posts
+          SET title = ?, thumbnail = ?, content = ?, author = ?, is_public = ?
+        WHERE id = ?",
+    [params[:title], params[:thumbnail], params[:content], params[:author],
+     is_public, params[:id]]
+  )
 
   hx_redirect
 end
 
 delete '/api/:id' do
-  db_safe do
-    conn.exec_params(
-      'DELETE FROM blogging_schema.posts WHERE id = $1',
-      [params[:id].to_i]
-    )
-  end
+  db.execute(
+    'DELETE FROM posts WHERE id = ?',
+    [params[:id].to_i]
+  )
 
   hx_redirect
 end
