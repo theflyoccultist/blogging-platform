@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
+require_relative './db'
+
 # it will help.
 module Helpers
+  def db
+    DB.connection
+  end
+
   # Helper to render views with or without layout based on HTMX requests.
   def smart_template(view)
     if request.env['HTTP_HX_REQUEST'] == 'true'

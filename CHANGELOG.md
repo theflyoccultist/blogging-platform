@@ -1,12 +1,13 @@
 # Changelog
 
+## [2.1] - 2025-05-07
+- **Works in Docker Containers with Redis. There are only minor cosmetic updates and fixes to do.**
+
 ## [2.0] - 2025-03-06
 - **Express backend gone, time for Sinatra**
   - Instead of navigating between 40 express files and relying on dependencies that might break anytime, I chose to use something easier to manage for a solo dev like me.
 
 ### To do
-  - Run test cases, it uses a dynamically typed language and raw SQL queries, so it's dangerous left untested.
-  - Readd token rotation or another way to increase security.
   - Soon, React will be eradicated as well.
 
 ## [1.4.0] - 2025-02-17
