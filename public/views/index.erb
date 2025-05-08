@@ -23,7 +23,7 @@
               hx-swap="innerHTML"
               hx-push-url="true">
             <td><%= post['title'] %></td> 
-            <td><%= post['is_public'] ? 'Published' : 'Draft' %></td>
+            <td><%= post['is_public'] == 1 ? 'Published' : 'Draft' %></td>
             <td><%= post['author'] %></td>
             </tr>
           <% end %>

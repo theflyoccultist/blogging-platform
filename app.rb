@@ -106,10 +106,7 @@ end
 get '/' do
   result = db.execute("SELECT * FROM posts
       ORDER BY created_at DESC")
-  @posts = result.map do |row|
-    row['is_public'] = params[:is_public] == '1' ? 1 : 0
-    row
-  end
+  @posts = result
 
   smart_template(:index)
 end
@@ -145,7 +142,7 @@ get '/api' do
 end
 
 post '/api' do
-  is_public = params[:is_public].to_i
+  is_public = params[:is_public] == 'true' ? 1 : 0
 
   db.execute(
     "INSERT INTO posts (title, thumbnail, content, author, is_public)
@@ -157,7 +154,7 @@ post '/api' do
 end
 
 put '/api/:id' do
-  is_public = params[:is_public] == '1' ? 1 : 0
+  is_public = params[:is_public] == 'true' ? 1 : 0
 
   db.execute(
     "UPDATE posts

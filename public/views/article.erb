@@ -11,7 +11,10 @@
   <%= @post ? @post['content'] : '' %>
   </textarea>
 
-  <input type="text" id="Author" name="author"  value="<%= @post ? @post['author']: '' %>" placeholder="Who dares write this? (required)" maxlength="50" required />
+  <input type="text" id="Author" name="author"  
+         value="<%= @post ? @post['author']: '' %>" 
+         placeholder="Who dares write this? (required)" 
+         maxlength="50" required />
   
   <label for="Visibility">Visibility</label>
   <div name="is_public" id="Visibility" class="field-row">
