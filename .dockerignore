@@ -1,6 +1,9 @@
 Dockerfile
 README.md
+CHANGELOG.md
 .ruby-version
+.ruby-lsp/
 .bundle/
 vendor/
 .git/
+data/post.db

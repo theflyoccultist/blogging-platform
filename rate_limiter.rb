@@ -12,7 +12,7 @@ class RateLimiter
     @app = app
     @limit = limit
     @period = period
-    @redis = Redis.new(password: ENV['REDIS_PASSWORD'])
+    @redis = Redis.new(url: ENV['REDIS_URL'], password: ENV['REDIS_PASSWORD'])
   end
 
   def call(env)
@@ -22,7 +22,7 @@ class RateLimiter
     count = @redis.incr(key)
     @redis.expire(key, @period) if count == 1
 
-    return [429, { 'Content-Type' => 'text/plain' }, ['Rate Limit exceeded']] if count > @limit
+    halt 429, 'Rate Limit exceeded' if count > @limit
 
     @app.call(env)
   end
