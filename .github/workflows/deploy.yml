@@ -1,0 +1,37 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Authenticate with Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      
+      - name: Set Up Google Cloud SDK
+        run: |
+          gcloud auth configure-docker europe-west1-docker.pkg.dev
+
+      - name: Build and push Docker Image
+        run: |
+          docker build -t europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/blogging-repo/blog .
+          docker push europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/blogging-repo/blog
+
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy portfolio-site \
+          --image europe-west1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/blogging-repo/blog \
+          --platform managed \
+          --region europe-west1 \
+          --allow-unauthenticated
+
