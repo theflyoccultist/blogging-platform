@@ -10,7 +10,7 @@ A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed 
 - Simple markdown editor for creating content
 - Secure authentication
 - Fabulous Windows 98 aesthetic
-- Rate Limiting with Redis
+- Rate Limiting with SQLite3
 
 ## Upcoming
 - A live markdown previewer (for the article editor)

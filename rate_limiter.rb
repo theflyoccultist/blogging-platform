@@ -1,30 +1,48 @@
 # frozen_string_literal: true
 
 require 'dotenv/load'
-require 'redis'
+require 'sqlite3'
 
 # The @limit and @period instance variables specify
 # the maximum number of requests and the time period,
-# respectively. We use the redis gem to create a new
-# Redis client and increment the request count for each client.
+# respectively.
 class RateLimiter
-  def initialize(app, limit:, period:)
+  def initialize(app, limit:, period:, db_path: 'data/rate-limiter.db')
     @app = app
     @limit = limit
     @period = period
-    @redis = Redis.new(url: ENV['REDIS_URL'], password: ENV['REDIS_PASSWORD'])
+
+    @db = SQLite3::Database.new(db_path)
+    create_table
   end
 
   def call(env)
     req = Rack::Request.new(env)
     ip = req.ip
-    key = "rate-limit:#{ip}"
-    count = @redis.incr(key)
 
-    @redis.expire(key, @period)
+    current_time = Time.now.to_i
+    window_start = current_time - @period
 
-    return [429, { 'Content-Type' => 'text/plain' }, ['Rate Limit Exceeded']] if count > @limit
+    @db.execute('DELETE FROM rate_limits WHERE timestamp < ?', window_start)
+
+    count = @db.get_first_value('SELECT COUNT(*) FROM rate_limits WHERE ip = ?', ip)
+
+    return [429, { 'content-type' => 'text/plain' }, ['rate limit exceeded']] if count > @limit
+
+    @db.execute('INSERT INTO rate_limits (ip, timestamp) VALUES (?, ?)', [ip, current_time])
 
     @app.call(env)
+  end
+
+  private
+
+  def create_table
+    @db.execute <<-SQL
+      CREATE TABLE IF NOT EXISTS rate_limits (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        ip TEXT NOT NULL,
+        timestamp INTEGER NOT NULL
+      );
+    SQL
   end
 end
