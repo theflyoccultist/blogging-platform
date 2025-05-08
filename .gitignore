@@ -2,3 +2,4 @@
 .env
 vendor/
 data/post.db
+data/rate-limiter.db

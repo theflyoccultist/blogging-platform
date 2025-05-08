@@ -24,9 +24,10 @@ A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed 
 
 ## Setup Instructions
 
-- Setup Docker compose
+- Start the app with rack
+
 ```bash
-docker compose up --build
+rackup --host 0.0.0.0 --port 8080
 ```
 
 - Access the provided URL
