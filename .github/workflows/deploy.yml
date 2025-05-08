@@ -36,5 +36,7 @@ jobs:
           --image europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog \
           --platform managed \
           --region europe-west1 \
-          --allow-unauthenticated
+          --allow-unauthenticated \
+          --timeout 600s \
+          --concurrency 1
 

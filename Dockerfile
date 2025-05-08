@@ -2,8 +2,6 @@ FROM ruby:3.3-alpine
 
 RUN apk add --no-cache build-base sqlite sqlite-dev
 
-RUN apk add --no-cache redis && mkdir -p /run/redis && redis-server --daemonize yes
-
 WORKDIR /usr/src/app
 
 ENV GEM_PATH=/usr/src/app/vendor/bundle/ruby/3.3.0
