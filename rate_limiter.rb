@@ -20,9 +20,10 @@ class RateLimiter
     ip = req.ip
     key = "rate-limit:#{ip}"
     count = @redis.incr(key)
-    @redis.expire(key, @period) if count == 1
 
-    halt 429, 'Rate Limit exceeded' if count > @limit
+    @redis.expire(key, @period)
+
+    return [429, { 'Content-Type' => 'text/plain' }, ['Rate Limit Exceeded']] if count > @limit
 
     @app.call(env)
   end
