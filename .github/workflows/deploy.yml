@@ -27,7 +27,7 @@ jobs:
       
       - name: Build and push Docker Image
         run: |
-          docker build -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog .
+          docker build --no-cache -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog .
           docker push europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog
 
       - name: Deploy to Cloud Run
@@ -36,8 +36,5 @@ jobs:
           --image europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog \
           --platform managed \
           --region europe-west1 \
-          --allow-unauthenticated \
-          --max-instances=1 \
-          --memory=512Mi \
-          --timeout 600s \
+          --allow-unauthenticated
 

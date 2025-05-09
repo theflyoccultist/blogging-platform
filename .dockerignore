@@ -7,3 +7,4 @@ CHANGELOG.md
 vendor/
 .git/
 data/post.db
+data/rate-limiter.db
