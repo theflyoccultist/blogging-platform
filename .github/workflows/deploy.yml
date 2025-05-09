@@ -39,5 +39,3 @@ jobs:
             --allow-unauthenticated \
             --timeout=300s \
             --port 8080
-            --no-traffic
-            --revision-suffix="test-no-probe"
