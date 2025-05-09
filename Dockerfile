@@ -19,3 +19,5 @@ ENV PORT=8080
 EXPOSE 8080
 
 CMD ["rackup", "--host", "0.0.0.0", "--port", "8080"]
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 CMD curl --fail http://localhost:8080 || exit 1

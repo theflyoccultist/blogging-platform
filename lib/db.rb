@@ -10,8 +10,5 @@ module DB
       db.results_as_hash = true
       db
     end
-  rescue SQLite3::Exception => e
-    halt 500
-    puts "SQLite says: #{e.message}"
   end
 end
