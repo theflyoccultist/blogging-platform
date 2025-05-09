@@ -18,4 +18,4 @@ ENV RACK_ENV=production
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["sh", "-c", "sleep 5 && rackup --host 0.0.0.0 --port 8080"]
+CMD ["rackup", "--host", "0.0.0.0", "--port", "8080"]

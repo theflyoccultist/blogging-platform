@@ -11,6 +11,7 @@ jobs:
     
     env:
       GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      GCP_REGION: europe-west1
 
     steps:
       - name: Checkout repository
@@ -21,20 +22,19 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
       
-      - name: Set Up Google Cloud SDK
-        run: |
-          gcloud auth configure-docker europe-west1-docker.pkg.dev
-      
+      - name: Configure Docker with gcloud
+        run: gcloud auth configure-docker $GCP_REGION-docker.pkg.dev
+
       - name: Build and push Docker Image
         run: |
-          docker build --no-cache -t europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog .
-          docker push europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog
+          docker build --no-cache -t $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog .
+          docker push $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy blogging-repo \
-          --image europe-west1-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog \
-          --platform managed \
-          --region europe-west1 \
-          --allow-unauthenticated
+            --image $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog \
+            --platform managed \
+            --region $GCP_REGION \
+            --allow-unauthenticated
 
