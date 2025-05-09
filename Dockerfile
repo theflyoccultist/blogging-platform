@@ -9,6 +9,8 @@ ENV PATH=$GEM_PATH/bin:$PATH
 
 COPY Gemfile Gemfile.lock ./
 
+COPY data/post.db data/rate-limiter.db /usr/src/app/
+
 RUN bundle config set --local path 'vendor/bundle' \
   && bundle install
 
@@ -19,5 +21,3 @@ ENV PORT=8080
 EXPOSE 8080
 
 CMD ["rackup", "--host", "0.0.0.0", "--port", "8080"]
-
-HEALTHCHECK --interval=30s --timeout=10s --start-period=120s --retries=3 CMD curl --fail http://localhost:8080 || exit 1
