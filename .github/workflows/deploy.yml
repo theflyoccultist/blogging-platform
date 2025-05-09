@@ -36,5 +36,5 @@ jobs:
             --image $GCP_REGION-docker.pkg.dev/$GCP_PROJECT_ID/blogging-repo/blog \
             --platform managed \
             --region $GCP_REGION \
-            --allow-unauthenticated
-
+            --allow-unauthenticated \
+            --timeout=300s
