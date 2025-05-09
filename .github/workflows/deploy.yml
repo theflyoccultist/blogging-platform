@@ -37,6 +37,7 @@ jobs:
           --platform managed \
           --region europe-west1 \
           --allow-unauthenticated \
+          --max-instances=1 \
+          --memory=512Mi \
           --timeout 600s \
-          --concurrency 1
 
