@@ -51,6 +51,10 @@ class UserRoutes < Sinatra::Base
   end
 
   before %r{/(?!login|register|api|denied).*} do
-    halt 403, smart_template(:denied) unless logged_in?
+    if env['PATH_INFO'] == '/' && !logged_in?
+      halt 200, 'Sure - bitch probe is getting its 200.'
+    else
+      halt 403, smart_template(:denied)
+    end
   end
 end
