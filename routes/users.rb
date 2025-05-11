@@ -54,7 +54,7 @@ class UserRoutes < Sinatra::Base
     redirect '/login' unless logged_in?
   end
 
-  before %r{/(?!/|login|register|api|denied).*} do
-    halt 403, smart_template(:denied) unless logged_in?
-  end
+  # before %r{/(?!/|login|register|api|denied).*} do
+  #  halt 403, smart_template(:denied) unless logged_in?
+  # end
 end

@@ -17,7 +17,12 @@ class MyApp < Sinatra::Base
   use ArticleRoutes
 end
 
+set :static, true
 set :public_folder, File.join(__dir__, 'public')
 
+<<<<<<< HEAD
 set :port, ENV.fetch('PORT', 8080)
 set :bind, '0.0.0.0'
+=======
+set :environment, :production
+>>>>>>> c2c5933 (delete problematic route)
