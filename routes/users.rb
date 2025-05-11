@@ -23,6 +23,7 @@ class UserRoutes < Sinatra::Base
 
     if user && BCrypt::Password.new(user['password']) == params[:password]
       session[:user_id] = user['id']
+      puts "[DEBUG] Session after login: #{session.inspect}"
       redirect '/'
     else
       @error = true
@@ -48,13 +49,11 @@ class UserRoutes < Sinatra::Base
   delete '/logout' do
     session.clear
     smart_template(:login)
+    redirect '/login'
   end
 
-  before %r{/} do
+  before do
+    pass if request.path_info =~ %r{^/(login|register|denied|css|js|images|favicon.ico)$}
     redirect '/login' unless logged_in?
   end
-
-  # before %r{/(?!/|login|register|api|denied).*} do
-  #  halt 403, smart_template(:denied) unless logged_in?
-  # end
 end

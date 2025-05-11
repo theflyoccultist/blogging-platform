@@ -13,7 +13,7 @@ class ArticleRoutes < Sinatra::Base
     result = db.execute("SELECT * FROM posts
       ORDER BY created_at DESC")
     @posts = result
-
+    puts "[DEBUG] Session at dashboard: #{session.inspect}"
     smart_template(:index)
   end
 
