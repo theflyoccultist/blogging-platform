@@ -10,9 +10,9 @@ use RateLimiter, limit: 100, period: 60
 run MyApp
 
 use Rack::Session::Cookie,
-    key: 'rack.Session',
+    key: 'rack.session',
     path: '/',
     expire_after: 14_400,
-    same_site: :none,
-    secure: true, # do true for deploy
+    same_site: :lax,
+    secure: true,
     secret: ENV['SSC']

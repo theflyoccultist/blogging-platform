@@ -9,8 +9,6 @@ ENV PATH=$GEM_PATH/bin:$PATH
 
 COPY Gemfile Gemfile.lock ./
 
-COPY public/ /usr/src/app/public/
-
 COPY data/post.db data/rate-limiter.db /usr/src/app/data/
 
 RUN bundle config set --local path 'vendor/bundle' \
