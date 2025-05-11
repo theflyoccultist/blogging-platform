@@ -52,8 +52,7 @@ class UserRoutes < Sinatra::Base
     redirect '/login'
   end
 
-  before do
-    pass if request.path_info =~ %r{^/(login|register|denied|css|js|images|favicon.ico)$}
+  before %r{/} do
     redirect '/login' unless logged_in?
   end
 end
