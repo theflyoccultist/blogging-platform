@@ -15,6 +15,7 @@ class MyApp < Sinatra::Base
   use ArticleRoutes
 end
 
+set :static, true
 set :public_folder, File.join(__dir__, 'public')
 
 set :environment, :production
