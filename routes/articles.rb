@@ -6,14 +6,16 @@ require_relative '../lib/helpers'
 class ArticleRoutes < Sinatra::Base
   helpers Helpers
 
-  enable :sessions
   set :views, File.expand_path('../public/views', __dir__)
+
+  before do
+    redirect '/login' unless logged_in?
+  end
 
   get '/' do
     result = db.execute("SELECT * FROM posts
       ORDER BY created_at DESC")
     @posts = result
-    puts "[DEBUG] Session at dashboard: #{session.inspect}"
     smart_template(:index)
   end
 

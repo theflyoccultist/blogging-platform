@@ -10,9 +10,6 @@ require_relative 'lib/db_setup'
 
 # Routes and logic
 class MyApp < Sinatra::Base
-  configure do
-    set :environment, ENV.fetch('RACK_ENV', 'development')
-  end
   use UserRoutes
   use ArticleRoutes
 end

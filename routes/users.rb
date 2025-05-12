@@ -6,8 +6,11 @@ require_relative '../lib/helpers'
 class UserRoutes < Sinatra::Base
   helpers Helpers
 
-  enable :sessions
   set :views, File.expand_path('../public/views', __dir__)
+
+  before %r{/} do
+    redirect '/login' unless logged_in?
+  end
 
   get '/login' do
     smart_template(:login)
@@ -23,7 +26,6 @@ class UserRoutes < Sinatra::Base
 
     if user && BCrypt::Password.new(user['password']) == params[:password]
       session[:user_id] = user['id']
-      puts "[DEBUG] Session after login: #{session.inspect}"
       redirect '/'
     else
       @error = true
@@ -50,9 +52,5 @@ class UserRoutes < Sinatra::Base
     session.clear
     smart_template(:login)
     redirect '/login'
-  end
-
-  before %r{/} do
-    redirect '/login' unless logged_in?
   end
 end
