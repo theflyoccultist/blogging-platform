@@ -30,4 +30,4 @@ A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed 
 rackup --host 0.0.0.0 --port 8080
 ```
 
-- Access the provided URL (most likely `http://0.0.0.0:8080`)
+- Access the provided URL (most likely `http://0.0.0.0:8080`) by pressing Ctrl + Shift + u then clicking.

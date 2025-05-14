@@ -56,6 +56,21 @@
       Save
     </button> 
   <% end %>
-
 </section>
 
+<section id="preview-wrapper">
+  <h4> Start Typing to Display Article Preview:</h4>
+  <div id="markdown-output">
+    <!-- Markdown will be parsed here. -->
+  </div>
+</section>
+
+<script src="../static/marked.min.js"></script>
+<script>
+  const input = document.getElementById('Post');
+  const output = document.getElementById('markdown-output');
+  
+  input.addEventListener('input', () => {
+    output.innerHTML = marked.parse(input.value);
+  });
+</script>
