@@ -6,21 +6,20 @@ A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed 
 
 ## Features
 - Create, edit, and delete blog posts
-- View blog posts and setup their status (Draft: Private, Published: Public)
-- Simple markdown editor for creating content
+- View blog posts and set their status (Draft: Private, Published: Public)
+- Create your content in Markdown
 - Secure authentication
 - Fabulous Windows 98 aesthetic
 - Rate Limiting with SQLite3
-
-## Upcoming
-- A live markdown previewer (for the article editor)
-- Pagination to display more than 10 articles
+- Renders your Markdown content in a previewer
+- Pagination to display more than 10 articles, and DB load control.
 
 ## Tech Stack
 
-- **Ruby** with **Sinatra** for the server-side API
+- **Ruby** with **Rack**, **Sinatra** for the server-side API
 - **Persistent storage with SQLite3**
-- **ERB Templates** with **HTMX** (it's included in the repository)
+- **ERB Templates** with **HTMX**
+- **marked.js** for the Markdown previewer
 
 ## Setup Instructions
 

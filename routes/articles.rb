@@ -14,9 +14,15 @@ class ArticleRoutes < Sinatra::Base
   end
 
   get '/' do
-    result = db.execute("SELECT * FROM posts
-      ORDER BY created_at DESC")
-    @posts = result
+    page = params[:page].to_i
+    page = 1 if page < 1
+    limit = 10
+    offset = (page - 1) * limit
+
+    @posts = db.execute("SELECT * FROM posts ORDER BY created_at
+      DESC LIMIT ? OFFSET ?", [limit, offset])
+    @total_posts = db.get_first_value('SELECT COUNT(*) FROM POSTS')
+    @current_page = page
     smart_template(:index)
   end
 

@@ -33,6 +33,26 @@
     </table>
   </div>
 
+  <div class="pagination">
+    <% total_pages = (@total_posts.to_f / 10).ceil %>
+
+    <% if @current_page > 1 %>
+      <button hx-get="/?page=<%= @current_page - 1 %>"
+              hx-target="#content"
+              hx-swap="innerHTML">
+        Previous
+      </button>
+    <% end %>
+
+    <% if @current_page < total_pages %>
+      <button hx-get="/?page=<%= @current_page + 1 %>"
+              hx-target="#content"
+              hx-swap="innerHTML">
+        Next
+      </button>
+    <% end %>
+  </div>
+
   <div class="buttons">
     <button hx-get="/article" 
             hx-target="#content" 
