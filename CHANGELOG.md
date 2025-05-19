@@ -1,7 +1,8 @@
 # Changelog
 
-## [2.1] - 2025-05-07
-- **Works in Docker Containers with Redis. There are only minor cosmetic updates and fixes to do.**
+## [2.1] - 2025-05-19
+- **Re-add Rate-limiting, Markdown previewer and Pagination.**
+- **Project completed**. Future updates will only consist of minor cosmetic updates and fixes to do.
 
 ## [2.0] - 2025-03-06
 - **Express backend gone, time for Sinatra**

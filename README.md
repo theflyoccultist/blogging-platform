@@ -2,7 +2,13 @@
 
 A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed to edit my own article entries before it's seamlessly integrated with my portfolio. This platform will serve as a place to document my coding journey and demonstrate my expertise in software development.
 
+---
+
 ![Index Thumbnail](public/assets/index-page.png)
+
+![Article Thumbnail](public/assets/article.png)
+
+--- 
 
 ## Features
 - Create, edit, and delete blog posts
@@ -29,4 +35,4 @@ A server side rendered blogging platform using Ruby, HTMX and SQLite3, designed 
 rackup --host 0.0.0.0 --port 8080
 ```
 
-- Access the provided URL (most likely `http://0.0.0.0:8080`) by pressing Ctrl + Shift + u then clicking.
+- Access the provided URL (most likely `http://0.0.0.0:8080`) by pressing Ctrl + Shift then clicking.

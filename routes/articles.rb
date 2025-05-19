@@ -9,7 +9,7 @@ class ArticleRoutes < Sinatra::Base
   set :views, File.expand_path('../public/views', __dir__)
 
   before do
-    pass if request.path_info =~ /\.(css|js|woff2)$/
+    pass if request.path_info =~ /\.(css|js|woff2|ico)$/
     redirect '/login' unless logged_in?
   end
 
