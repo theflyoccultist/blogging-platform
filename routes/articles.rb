@@ -9,7 +9,10 @@ class ArticleRoutes < Sinatra::Base
   set :views, File.expand_path('../public/views', __dir__)
 
   before do
-    pass if request.path_info =~ /\.(css|js|woff2|ico)$/
+    path = request.path_info
+    method = request.request_method
+
+    pass if path =~ /\.(css|js|woff2|ico)$/
     pass if method == 'GET' && path.start_with?('/api')
     redirect '/login' unless logged_in?
   end
