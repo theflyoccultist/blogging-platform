@@ -10,6 +10,7 @@ class ArticleRoutes < Sinatra::Base
 
   before do
     pass if request.path_info =~ /\.(css|js|woff2|ico)$/
+    pass if method == 'GET' && path.start_with?('/api')
     redirect '/login' unless logged_in?
   end
 
