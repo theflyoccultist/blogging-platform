@@ -51,7 +51,7 @@ class ArticleRoutes < Sinatra::Base
   get '/api' do
     cursor = params[:cursor] || Time.now.iso8601
     db.execute(
-      "SELECT id, title, thumbnail, created_at, content, is_public
+      "SELECT id, title, thumbnail, created_at, content, author, is_public
         FROM posts
         WHERE created_at < ?
         ORDER BY created_at DESC
